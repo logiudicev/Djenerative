@@ -14,17 +14,26 @@ public class Patterns
     private static int _octaveCache;
     private static Interval? _intervalCache;
 
-    public static Pattern Rhythm(Enums.Modes mode, Note rootNote, Enums.NoteType type, int addRange = 0)
+    public static Pattern Rhythm(Enums.Modes mode, Note rootNote, Enums.NoteType type, bool harmony = false, int addRange = 0)
     {
-        int rootOctave = rootNote.Octave;
-        int octave = addRange == 0 ? rootOctave : Randomise.Run(rootOctave, rootOctave + addRange);
-        bool skipZero = rootOctave != octave;
-        var root = Note.Get(rootNote.NoteName, octave);
+        if (harmony)
+        {
+            CreateHarmony(mode);
+        }
+        else
+        {
+            int octave = rootNote.Octave;
+            _octaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
+            bool skipZero = rootNote.Octave != octave;
+            _intervalCache = MainWindow.GetRandomInterval(mode, skipZero);
+        }
+
+        Note root = Note.Get(rootNote.NoteName, _octaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(MainWindow.GetRandomInterval(mode, skipZero), new SevenBitNumber((byte) type))
+            .Note(_intervalCache, new SevenBitNumber((byte) type))
             .Build();
     }
 
@@ -50,15 +59,25 @@ public class Patterns
             .Build();
     }
 
-    public static Pattern Harmonic(Enums.Modes mode, Note rootNote)
+    public static Pattern Harmonic(Enums.Modes mode, Note rootNote, bool harmony = false)
     {
-        int octave = rootNote.Octave;
-        var root = Note.Get(rootNote.NoteName, octave + 2);
+        if (harmony)
+        {
+            CreateHarmony(mode);
+        }
+        else
+        {
+            int octave = rootNote.Octave;
+            _octaveCache = octave + 2;
+            _intervalCache = MainWindow.GetRandomInterval(mode);
+        }
+
+        Note root = Note.Get(rootNote.NoteName, _octaveCache);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Eighth)
+            .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(MainWindow.GetRandomInterval(mode), new SevenBitNumber((byte) Enums.NoteType.Harmonic))
+            .Note(_intervalCache, new SevenBitNumber((byte) Enums.NoteType.Harmonic))
             .Build();
     }
 
