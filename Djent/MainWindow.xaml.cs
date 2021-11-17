@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Composing;
@@ -16,59 +18,86 @@ namespace Djent
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Random Rand = new();
-
         public MainWindow()
         {
             InitializeComponent();
 
-            CreateMidiFile(Enums.Modes.HarmonicMinor, Note.Get(NoteName.G, 2), 140, "test");
+            ModesComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Modes));
+            RootNoteComboBox.ItemsSource = Enum.GetValues(typeof(NoteName));
         }
 
-        public static void CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, string fileName)
+        public class Probability
         {
-            string file = $"{fileName}.mid";
+            public double RhythmMuted { get; set; }
+            public double RhythmOpen { get; set; }
+            public double Lead { get; set; }
+            public double Gap { get; set; }
+            public double Harmonic { get; set; }
+        }
+
+        public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability probability)
+        {
+            string file = $"{Enum.GetName(mode)}-{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmss}.mid";
 
             var midiFile = new MidiFile(new TrackChunk());
             var tempoMap = TempoMap.Create(Tempo.FromBeatsPerMinute(bpm));
             midiFile.ReplaceTempoMap(tempoMap);
-
-            // Blank to allow tempo import
             midiFile.Chunks.Add(new TrackChunk());
-             
-            List<Pattern> patternList = new List<Pattern>();
-            for (int i = 0; i < 512; i++)
+            
+            List<Pattern> guitar1 = new List<Pattern>();
+            List<Pattern> guitar2 = new List<Pattern>();
+            for (int i = 0; i < length; i++)
             {
                 Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
                     new Weighted.ChanceParam(() =>
                     {
-                        patternList.Add(Patterns.RhythmMutedPattern(mode, rootNote));
-                    }, 35),
+                        var note = Patterns.Rhythm(mode, rootNote, Enums.NoteType.Mute);
+                        guitar1.Add(note);
+                        guitar2.Add(note);
+                    }, probability.RhythmMuted),
                     new Weighted.ChanceParam(() =>
                     {
-                        patternList.Add(Patterns.RhythmOpenPattern(mode, rootNote));
-                    }, 35),
+                        var note = Patterns.Rhythm(mode, rootNote, Enums.NoteType.Open);
+                        guitar1.Add(note);
+                        guitar2.Add(note);
+                    }, probability.RhythmOpen),
                     new Weighted.ChanceParam(() =>
                     {
-                        patternList.Add(Patterns.LeadPattern(mode, rootNote));
-                    }, 60),
+                        guitar1.Add(Patterns.Lead(mode, rootNote));
+                        guitar2.Add(Patterns.Lead(mode, rootNote, true));
+                    }, probability.Lead),
                     new Weighted.ChanceParam(() =>
                     {
-                        patternList.Add(Patterns.GapPattern());
-                    }, 5)
+                        var note = Patterns.Harmonic(mode, rootNote);
+                        guitar1.Add(note);
+                        guitar2.Add(note);
+                    }, probability.Harmonic),
+                    new Weighted.ChanceParam(() =>
+                    {
+                        guitar1.Add(Patterns.Gap());
+                        guitar2.Add(Patterns.Gap());
+                    }, probability.Gap)
                 );
                 chanceExecutor.Execute();
             }
 
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, patternList));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2));
 
             File.Delete(file);
             midiFile.Write(file);
+
+            return Task.CompletedTask;
         }
 
-        public static Interval GetRandomInterval(Enums.Modes mode)
+        public static Interval GetRandomInterval(Enums.Modes mode, bool skipZero = false)
         {
-            var seed = Rand.Next(0, 7);
+            int seed = Randomise.Run(skipZero ? 1 : 0, 7);
+            return GetInterval(mode, seed);
+        }
+
+        public static Interval GetInterval(Enums.Modes mode, int seed)
+        {
             Interval interval = mode switch
             {
                 Enums.Modes.Agnostic => Dictionaries.Agnostic[seed],
@@ -93,6 +122,34 @@ namespace Djent
             return trackChunk;
         }
 
+        private async void GenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mode = (Enums.Modes) ModesComboBox.SelectedItem;
+            var rootNote = (NoteName) RootNoteComboBox.SelectedItem;
+            var rootOctave = (int) OctaveIntegerUpDown.Value!;
+            var bpm = (double) BpmDoubleUpDown.Value!;
+            var notes = (uint) NotesIntegerUpDown.Value!;
+
+            if (bpm < 4) return;
+            if (notes < 1) return;
+            if (rootOctave is < 1 or > 3) return;
+
+            var probability = new Probability
+            {
+                RhythmMuted = (double) WeightRhythmMuted.Value!,
+                RhythmOpen = (double) WeightRhythmOpen.Value!,
+                Lead = (double) WeightLead.Value!,
+                Gap = (double) WeightGap.Value!,
+                Harmonic = (double) WeightHarmonic.Value!,
+            };
+
+            await CreateMidiFile(
+                mode,
+                Note.Get(rootNote, rootOctave),
+                bpm,
+                notes,
+                probability);
+        }
 
 
 

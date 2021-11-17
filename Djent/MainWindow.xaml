@@ -3,11 +3,154 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Djent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Metal Generator"
         SizeToContent="WidthAndHeight">
-    <StackPanel>
+
+    <StackPanel
+        HorizontalAlignment="Left"
+        Margin="6">
+
+        <Label
+            Content="Mode / Scale"
+            HorizontalContentAlignment="Center"/>
+
+        <ComboBox
+            Name="ModesComboBox"
+            Width="150"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            SelectedIndex="0"/>
+
+        <Label
+            Content="Settings"
+            HorizontalContentAlignment="Center"/>
+
+
+        <DockPanel HorizontalAlignment="Center">
+            <Label
+                Content="Root Note"
+                HorizontalContentAlignment="Center"/>
+
+            <ComboBox
+                Name="RootNoteComboBox"
+                Width="70"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                SelectedIndex="7"/>
+
+            <Label
+                Content="Octave"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="OctaveIntegerUpDown"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="2"
+                Minimum="1"
+                Maximum="3"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="BPM"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:DoubleUpDown
+                Name="BpmDoubleUpDown"
+                DisplayDefaultValueOnEmptyText="True"
+                Minimum="4"
+                Maximum="400"
+                DefaultValue="140"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Notes"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="NotesIntegerUpDown"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="256"
+                Minimum="1"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+        </DockPanel>
+
+        <Label
+            Content="Probability"
+            HorizontalContentAlignment="Center"/>
+
+        <DockPanel HorizontalAlignment="Center">
+            <Label
+                Content="Muted"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightRhythmMuted"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="35"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Open"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightRhythmOpen"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="20"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Lead"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightLead"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="60"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Gaps"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightGap"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="5"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Harmonics"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightHarmonic"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="3"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+        </DockPanel>
+
+        <Button
+            Name="GenerateButton"
+            Content="Generate"
+            Click="GenerateButton_Click"
+            Margin="0, 8, 0, 0"/>
 
     </StackPanel>
 </Window>

@@ -14,9 +14,9 @@ public static class Enums
 
     public enum Modes
     {
-        Agnostic = 0,
+        HarmonicMinor = 0,
         Phyrigian = 1,
-        HarmonicMinor = 2,
-        Evil = 3
+        Evil = 2,
+        Agnostic = 3
     }
 }
