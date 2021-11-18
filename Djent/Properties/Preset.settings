@@ -9,7 +9,7 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="Mode" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="Root" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>

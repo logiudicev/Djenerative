@@ -152,8 +152,8 @@ namespace Djent
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1));
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2));
 
-            File.Delete(file);
-            midiFile.Write(file);
+            File.Delete(@"C:\Users\anon\Desktop\test.mid");
+            midiFile.Write(@"C:\Users\anon\Desktop\test.mid");
 
             return Task.CompletedTask;
         }
@@ -203,7 +203,6 @@ namespace Djent
                 Degree7 = (double) WeightScaleRhythm7.Value!
             };
 
-            // NEED TO ADD UI AND UPDATE LINK TODO
             var probScaleLead = new Probability.Scale
             {
                 Degree1 = (double) WeightScaleLead1.Value!,
@@ -228,6 +227,11 @@ namespace Djent
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
+        }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetSettings();
         }
 
 

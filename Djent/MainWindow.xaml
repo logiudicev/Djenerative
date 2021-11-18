@@ -19,7 +19,7 @@
 
         <ComboBox
             Name="ModesComboBox"
-            Width="150"
+            Width="130"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"/>
 
@@ -280,14 +280,26 @@
                 Width="50"/>
         </DockPanel>
 
-        <Button
-            Name="SaveButton"
-            Content="Save"
-            Margin="0, 8, 0, 0" Click="SaveButton_Click"/>
+        <DockPanel Margin="0, 8, 0, 0" HorizontalAlignment="Center">
+            <Button
+                Name="SaveButton"
+                Content="Save"
+                Width="60"
+                Margin="0, 0, 10, 0"
+                Click="SaveButton_Click"/>
+
+            <Button
+                Name="LoadButton"
+                Content="Load"
+                Width="60"
+                Margin="10, 0, 0, 0"
+                Click="LoadButton_Click"/>
+        </DockPanel>
 
         <Button
             Name="GenerateButton"
             Content="Generate"
+            Width="60"
             Click="GenerateButton_Click"
             Margin="0, 8, 0, 0"/>
 

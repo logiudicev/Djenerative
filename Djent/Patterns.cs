@@ -91,9 +91,13 @@ public class Patterns
     {
         Interval interval = Scale switch
         {
-            Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
+            Enums.Modes.Major => Dictionaries.Major[seed],
+            Enums.Modes.Minor => Dictionaries.Minor[seed],
+            Enums.Modes.MelodicMinor => Dictionaries.MelodicMinor[seed],
             Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor[seed],
-            Enums.Modes.Evil => Dictionaries.Evil[seed],
+            Enums.Modes.HungarianMinor => Dictionaries.HungarianMinor[seed],
+            Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
+            
             _ => Interval.Zero
         };
         return interval;
@@ -177,13 +181,16 @@ public class Patterns
     {
         int position = Scale switch
         {
+            Enums.Modes.Major => Dictionaries.Major.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.Minor => Dictionaries.Minor.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.MelodicMinor => Dictionaries.MelodicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
             Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.HungarianMinor => Dictionaries.HungarianMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
             Enums.Modes.Phyrigian => Dictionaries.Phyrigian.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.Evil => Dictionaries.Evil.FirstOrDefault(x => x.Value == IntervalCache).Key,
             _ => 0
         };
 
-        var positionNew = (position + 2) % 6; // TODO Replace 7 with dictionary length (using a minus 1 due to 0-index)
+        var positionNew = (position + 2) % 7; // TODO Replace 7 with dictionary length (using a minus 1 due to 0-index)
         IntervalCache = GetInterval(positionNew);
 
         if (positionNew < position)
