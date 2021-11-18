@@ -14,10 +14,16 @@ public class Patterns
     private int OctaveCache { get; set; }
     private Interval? IntervalCache { get; set; }
     private Enums.Modes Scale { get; }
+    private Note RootNote { get; }
+    private Probability.Scale ProbScaleRhythm { get; }
+    private Probability.Scale ProbScaleLead { get; }
 
-    public Patterns(Enums.Modes mode)
+    public Patterns(Enums.Modes mode, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
     {
         Scale = mode;
+        RootNote = rootNote;
+        ProbScaleRhythm = probScaleRhythm;
+        ProbScaleLead = probScaleLead;
     }
 
     private Interval GetRandomInterval(Probability.Scale scale, bool skipZero = false)
@@ -77,7 +83,7 @@ public class Patterns
         return interval;
     }
 
-    public Pattern Rhythm(Note rootNote, Probability.Scale scale, Enums.NoteType type, bool harmony = false, int addRange = 0)
+    public Pattern Rhythm(Enums.NoteType type, bool harmony = false, int addRange = 0)
     {
         if (harmony)
         {
@@ -85,13 +91,13 @@ public class Patterns
         }
         else
         {
-            int octave = rootNote.Octave;
+            int octave = RootNote.Octave;
             OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
-            bool skipZero = rootNote.Octave != octave;
-            IntervalCache = GetRandomInterval(scale, skipZero);
+            bool skipZero = RootNote.Octave != octave;
+            IntervalCache = GetRandomInterval(ProbScaleRhythm, skipZero);
         }
 
-        Note root = Note.Get(rootNote.NoteName, OctaveCache);
+        Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
@@ -100,7 +106,7 @@ public class Patterns
             .Build();
     }
 
-    public Pattern Lead(Note rootNote, Probability.Scale scale, bool harmony = false)
+    public Pattern Lead(bool harmony = false)
     {
         if (harmony)
         {
@@ -108,12 +114,12 @@ public class Patterns
         }
         else
         {
-            int octave = rootNote.Octave;
+            int octave = RootNote.Octave;
             OctaveCache = Randomise.Run(octave + 1, octave + 3);
-            IntervalCache = GetRandomInterval(scale);
+            IntervalCache = GetRandomInterval(ProbScaleLead);
         }
 
-        Note root = Note.Get(rootNote.NoteName, OctaveCache);
+        Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
@@ -122,7 +128,7 @@ public class Patterns
             .Build();
     }
 
-    public Pattern Harmonic(Note rootNote, Probability.Scale scale, bool harmony = false)
+    public Pattern Harmonic(bool harmony = false)
     {
         if (harmony)
         {
@@ -130,12 +136,12 @@ public class Patterns
         }
         else
         {
-            int octave = rootNote.Octave;
+            int octave = RootNote.Octave;
             OctaveCache = octave + 2;
-            IntervalCache = GetRandomInterval(scale);
+            IntervalCache = GetRandomInterval(ProbScaleLead);
         }
 
-        Note root = Note.Get(rootNote.NoteName, OctaveCache);
+        Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)

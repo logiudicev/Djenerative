@@ -37,32 +37,31 @@ namespace Djent
             
             List<Pattern> guitar1 = new List<Pattern>();
             List<Pattern> guitar2 = new List<Pattern>();
-            Patterns pattern = new Patterns(mode);
+            Patterns pattern = new Patterns(mode, rootNote, probScaleRhythm, probScaleLead);
             for (int i = 0; i < length; i++)
             {
                 Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = pattern.Rhythm(rootNote, probScaleRhythm, Enums.NoteType.Mute);
+                        var note = pattern.Rhythm(Enums.NoteType.Mute);
                         guitar1.Add(note);
                         guitar2.Add(note);
                     }, probArticulation.RhythmMuted),
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = pattern.Rhythm(rootNote, probScaleRhythm, Enums.NoteType.Open);
+                        var note = pattern.Rhythm(Enums.NoteType.Open);
                         guitar1.Add(note);
                         guitar2.Add(note);
                     }, probArticulation.RhythmOpen),
                     new Weighted.ChanceParam(() =>
                     {
-                        guitar1.Add(pattern.Lead(rootNote, probScaleLead));
-                        guitar2.Add(pattern.Lead(rootNote, probScaleLead, true));
+                        guitar1.Add(pattern.Lead());
+                        guitar2.Add(pattern.Lead(true));
                     }, probArticulation.Lead),
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = pattern.Harmonic(rootNote, probScaleLead);
-                        guitar1.Add(note);
-                        guitar2.Add(note);
+                        guitar1.Add(pattern.Harmonic());
+                        guitar2.Add(pattern.Harmonic(true));
                     }, probArticulation.Harmonic),
                     new Weighted.ChanceParam(() =>
                     {
