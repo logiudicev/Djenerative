@@ -56,6 +56,36 @@ namespace Djent
             WeightScaleLead7.Value = Properties.Preset.Default.WeightLead7;
         }
 
+        public void SaveSettings()
+        {
+            Properties.Preset.Default.BPM = (double) BpmDoubleUpDown.Value!;
+            Properties.Preset.Default.Mode = ModesComboBox.SelectedIndex;
+            Properties.Preset.Default.Root = RootNoteComboBox.SelectedIndex;
+            Properties.Preset.Default.Octave = (int) OctaveIntegerUpDown.Value!;
+            Properties.Preset.Default.Notes = (int) NotesIntegerUpDown.Value!;
+            Properties.Preset.Default.WeightRhythmMuted = (int) WeightRhythmMuted.Value!;
+            Properties.Preset.Default.WeightRhythmOpen = (int) WeightRhythmOpen.Value!;
+            Properties.Preset.Default.WeightLead = (int) WeightLead.Value!;
+            Properties.Preset.Default.WeightGap = (int) WeightGap.Value!;
+            Properties.Preset.Default.WeightHarmonic = (int) WeightHarmonic.Value!;
+            Properties.Preset.Default.WeightRhythm1 = (int) WeightScaleRhythm1.Value!;
+            Properties.Preset.Default.WeightRhythm2 = (int) WeightScaleRhythm2.Value!;
+            Properties.Preset.Default.WeightRhythm3 = (int) WeightScaleRhythm3.Value!;
+            Properties.Preset.Default.WeightRhythm4 = (int) WeightScaleRhythm4.Value!;
+            Properties.Preset.Default.WeightRhythm5 = (int) WeightScaleRhythm5.Value!;
+            Properties.Preset.Default.WeightRhythm6 = (int) WeightScaleRhythm6.Value!;
+            Properties.Preset.Default.WeightRhythm7 = (int) WeightScaleRhythm7.Value!;
+            Properties.Preset.Default.WeightLead1 = (int) WeightScaleLead1.Value!;
+            Properties.Preset.Default.WeightLead2 = (int) WeightScaleLead2.Value!;
+            Properties.Preset.Default.WeightLead3 = (int) WeightScaleLead3.Value!;
+            Properties.Preset.Default.WeightLead4 = (int) WeightScaleLead4.Value!;
+            Properties.Preset.Default.WeightLead5 = (int) WeightScaleLead5.Value!;
+            Properties.Preset.Default.WeightLead6 = (int) WeightScaleLead6.Value!;
+            Properties.Preset.Default.WeightLead7 = (int) WeightScaleLead7.Value!;
+
+            Properties.Preset.Default.Save();
+        }
+
         public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
         {
             string file = $"{Enum.GetName(mode)}-{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmss}.mid";
@@ -193,6 +223,11 @@ namespace Djent
                 probArticulation,
                 probScaleRhythm,
                 probScaleLead);
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
         }
 
 

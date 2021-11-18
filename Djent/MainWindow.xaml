@@ -281,6 +281,11 @@
         </DockPanel>
 
         <Button
+            Name="SaveButton"
+            Content="Save"
+            Margin="0, 8, 0, 0" Click="SaveButton_Click"/>
+
+        <Button
             Name="GenerateButton"
             Content="Generate"
             Click="GenerateButton_Click"
