@@ -24,6 +24,36 @@ namespace Djent
 
             ModesComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Modes));
             RootNoteComboBox.ItemsSource = Enum.GetValues(typeof(NoteName));
+
+            GetSettings();
+        }
+
+        public void GetSettings()
+        {
+            BpmDoubleUpDown.Value = Properties.Preset.Default.BPM;
+            ModesComboBox.SelectedIndex = Properties.Preset.Default.Mode;
+            RootNoteComboBox.SelectedIndex = Properties.Preset.Default.Root;
+            OctaveIntegerUpDown.Value = Properties.Preset.Default.Octave;
+            NotesIntegerUpDown.Value = Properties.Preset.Default.Notes;
+            WeightRhythmMuted.Value = Properties.Preset.Default.WeightRhythmMuted;
+            WeightRhythmOpen.Value = Properties.Preset.Default.WeightRhythmOpen;
+            WeightLead.Value = Properties.Preset.Default.WeightLead;
+            WeightGap.Value = Properties.Preset.Default.WeightGap;
+            WeightHarmonic.Value = Properties.Preset.Default.WeightHarmonic;
+            WeightScaleRhythm1.Value = Properties.Preset.Default.WeightRhythm1;
+            WeightScaleRhythm2.Value = Properties.Preset.Default.WeightRhythm2;
+            WeightScaleRhythm3.Value = Properties.Preset.Default.WeightRhythm3;
+            WeightScaleRhythm4.Value = Properties.Preset.Default.WeightRhythm4;
+            WeightScaleRhythm5.Value = Properties.Preset.Default.WeightRhythm5;
+            WeightScaleRhythm6.Value = Properties.Preset.Default.WeightRhythm6;
+            WeightScaleRhythm7.Value = Properties.Preset.Default.WeightRhythm7;
+            WeightScaleLead1.Value = Properties.Preset.Default.WeightLead1;
+            WeightScaleLead2.Value = Properties.Preset.Default.WeightLead2;
+            WeightScaleLead3.Value = Properties.Preset.Default.WeightLead3;
+            WeightScaleLead4.Value = Properties.Preset.Default.WeightLead4;
+            WeightScaleLead5.Value = Properties.Preset.Default.WeightLead5;
+            WeightScaleLead6.Value = Properties.Preset.Default.WeightLead6;
+            WeightScaleLead7.Value = Properties.Preset.Default.WeightLead7;
         }
 
         public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)

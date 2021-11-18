@@ -21,8 +21,7 @@
             Name="ModesComboBox"
             Width="150"
             HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            SelectedIndex="0"/>
+            VerticalContentAlignment="Center"/>
 
         <Label
             Content="Settings"
@@ -38,8 +37,7 @@
                 Name="RootNoteComboBox"
                 Width="70"
                 HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                SelectedIndex="7"/>
+                VerticalContentAlignment="Center"/>
 
             <Label
                 Content="Octave"
@@ -47,8 +45,6 @@
 
             <xctk:IntegerUpDown
                 Name="OctaveIntegerUpDown"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="2"
                 Minimum="1"
                 Maximum="3"
                 HorizontalAlignment="Stretch"
@@ -60,10 +56,8 @@
 
             <xctk:DoubleUpDown
                 Name="BpmDoubleUpDown"
-                DisplayDefaultValueOnEmptyText="True"
                 Minimum="4"
                 Maximum="400"
-                DefaultValue="120"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
 
@@ -73,8 +67,6 @@
 
             <xctk:IntegerUpDown
                 Name="NotesIntegerUpDown"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="8192"
                 Minimum="1"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -91,8 +83,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightRhythmMuted"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="35"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -103,8 +93,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightRhythmOpen"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="20"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -115,8 +103,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightLead"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="60"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -127,8 +113,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightGap"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="15"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -139,8 +123,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightHarmonic"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="0"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -157,8 +139,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm1"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -169,8 +149,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm2"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -181,8 +159,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm3"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -193,8 +169,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm4"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -205,8 +179,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm5"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -217,8 +189,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm6"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -229,8 +199,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleRhythm7"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -247,8 +215,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead1"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -259,8 +225,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead2"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -271,8 +235,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead3"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -283,8 +245,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead4"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -295,8 +255,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead5"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -307,8 +265,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead6"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -319,8 +275,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead7"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
