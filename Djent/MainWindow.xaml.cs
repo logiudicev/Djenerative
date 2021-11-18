@@ -86,9 +86,9 @@ namespace Djent
             Properties.Preset.Default.Save();
         }
 
-        public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
+        public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
         {
-            string file = $"{Enum.GetName(mode)}-{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmss}.mid";
+            string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{scale.Interval1}-{scale.Interval2}-{scale.Interval3}-{scale.Interval4}-{scale.Interval5}-{scale.Interval6}-{scale.Interval7}-{DateTime.Now:yyyyMMddHHmmss}.mid";
 
             var midiFile = new MidiFile(new TrackChunk());
             var tempoMap = TempoMap.Create(Tempo.FromBeatsPerMinute(bpm));
@@ -97,7 +97,7 @@ namespace Djent
             
             List<Pattern> guitar1 = new List<Pattern>();
             List<Pattern> guitar2 = new List<Pattern>();
-            Patterns pattern = new Patterns(mode, rootNote, probScaleRhythm, probScaleLead);
+            Patterns pattern = new Patterns(scale, rootNote, probScaleRhythm, probScaleLead);
 
             Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
 
@@ -183,6 +183,35 @@ namespace Djent
             if (notes < 1) return;
             if (rootOctave is < 1 or > 3) return;
 
+            Scales.Intervals scale;
+
+            if (mode == Enums.Modes.Custom)
+            {
+                scale = new Scales.Intervals
+                {
+                    Interval1 = (int) Interval1.Value!,
+                    Interval2 = (int) Interval2.Value!,
+                    Interval3 = (int) Interval3.Value!,
+                    Interval4 = (int) Interval4.Value!,
+                    Interval5 = (int) Interval5.Value!,
+                    Interval6 = (int) Interval6.Value!,
+                    Interval7 = (int) Interval7.Value!
+                };
+            }
+            else
+            {
+                scale = mode switch
+                {
+                    Enums.Modes.Major => Scales.Major(),
+                    Enums.Modes.Minor => Scales.Minor(),
+                    Enums.Modes.MelodicMinor => Scales.MelodicMinor(),
+                    Enums.Modes.HarmonicMinor => Scales.HarmonicMinor(),
+                    //Enums.Modes.HungarianMinor => Scales.HungarianMinor(),
+                    Enums.Modes.Phyrigian => Scales.Phyrigian(),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+
             var probArticulation = new Probability.Articulation
             {
                 RhythmMuted = (double) WeightRhythmMuted.Value!,
@@ -215,7 +244,7 @@ namespace Djent
             };
 
             await CreateMidiFile(
-                mode,
+                scale,
                 Note.Get(rootNote, rootOctave),
                 bpm,
                 notes,

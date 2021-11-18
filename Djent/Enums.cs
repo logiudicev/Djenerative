@@ -15,11 +15,12 @@ public static class Enums
 
     public enum Modes
     {
-        Major = 0,
-        Minor = 1,
-        MelodicMinor = 2,
-        HarmonicMinor = 3,
-        HungarianMinor = 4,
+        Custom = 0,
+        Major = 1,
+        Minor = 2,
+        MelodicMinor = 3,
+        HarmonicMinor = 4,
         Phyrigian = 5
+        //HungarianMinor = 5,
     }
 }

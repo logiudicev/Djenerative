@@ -9,7 +9,7 @@
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="Mode" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="Root" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
@@ -30,7 +30,7 @@
       <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="WeightGap" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="WeightHarmonic" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

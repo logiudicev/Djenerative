@@ -14,16 +14,6 @@
         Margin="6">
 
         <Label
-            Content="Mode / Scale"
-            HorizontalContentAlignment="Center"/>
-
-        <ComboBox
-            Name="ModesComboBox"
-            Width="130"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"/>
-
-        <Label
             Content="Settings"
             HorizontalContentAlignment="Center"/>
 
@@ -124,6 +114,99 @@
             <xctk:IntegerUpDown
                 Name="WeightHarmonic"
                 Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+        </DockPanel>
+
+        <Label
+            Content="Scale / Mode"
+            HorizontalContentAlignment="Center"/>
+
+        <ComboBox
+            Name="ModesComboBox"
+            Width="130"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"/>
+
+        <Label
+            Content="Scale Builder"
+            HorizontalContentAlignment="Center"/>
+
+        <DockPanel HorizontalAlignment="Center">
+            <Label
+                Content="1"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval1"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="2"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval2"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="3"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval3"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="4"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval4"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="5"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval5"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="6"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval6"
+                Minimum="0"
+                Maximum="11"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="7"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="Interval7"
+                Minimum="0"
+                Maximum="11"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
         </DockPanel>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using Melanchall.DryWetMidi.Common;
@@ -13,20 +14,20 @@ public class Patterns
 {
     private int OctaveCache { get; set; }
     private Interval? IntervalCache { get; set; }
-    public Enums.Modes Scale { get; }
+    public Scales.Intervals Scale { get; }
     public Note RootNote { get; }
     public Probability.Scale ProbScaleRhythm { get; }
     public Probability.Scale ProbScaleLead { get; }
 
-    public Patterns(Enums.Modes mode, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
+    public Patterns(Scales.Intervals scale, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
     {
-        Scale = mode;
+        Scale = scale;
         RootNote = rootNote;
         ProbScaleRhythm = probScaleRhythm;
         ProbScaleLead = probScaleLead;
     }
 
-    private Interval GetRandomInterval(Probability.Scale scale)
+    private Interval GetInterval(Probability.Scale scale)
     {
         int seed = 0;
 
@@ -84,23 +85,17 @@ public class Patterns
 
         chanceExecutor.Execute();
 
-        return GetInterval(seed);
-    }
-
-    private Interval GetInterval(int seed)
-    {
-        Interval interval = Scale switch
+        return seed switch
         {
-            Enums.Modes.Major => Dictionaries.Major[seed],
-            Enums.Modes.Minor => Dictionaries.Minor[seed],
-            Enums.Modes.MelodicMinor => Dictionaries.MelodicMinor[seed],
-            Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor[seed],
-            Enums.Modes.HungarianMinor => Dictionaries.HungarianMinor[seed],
-            Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
-            
+            0 => Interval.FromHalfSteps(Scale.Interval1),
+            1 => Interval.FromHalfSteps(Scale.Interval2),
+            2 => Interval.FromHalfSteps(Scale.Interval3),
+            3 => Interval.FromHalfSteps(Scale.Interval4),
+            4 => Interval.FromHalfSteps(Scale.Interval5),
+            5 => Interval.FromHalfSteps(Scale.Interval6),
+            6 => Interval.FromHalfSteps(Scale.Interval7),
             _ => Interval.Zero
         };
-        return interval;
     }
 
     public Pattern Rhythm(Enums.NoteType type, bool harmony = false, int addRange = 0)
@@ -114,7 +109,7 @@ public class Patterns
             int octave = RootNote.Octave;
             OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
             bool skipZero = RootNote.Octave != octave;
-            IntervalCache = GetRandomInterval(ProbScaleRhythm);
+            IntervalCache = GetInterval(ProbScaleRhythm);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
@@ -136,7 +131,7 @@ public class Patterns
         {
             int octave = RootNote.Octave;
             OctaveCache = Randomise.Run(octave + 1, octave + 3);
-            IntervalCache = GetRandomInterval(ProbScaleLead);
+            IntervalCache = GetInterval(ProbScaleLead);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
@@ -158,7 +153,7 @@ public class Patterns
         {
             int octave = RootNote.Octave;
             OctaveCache = octave + 2;
-            IntervalCache = GetRandomInterval(ProbScaleLead);
+            IntervalCache = GetInterval(ProbScaleLead);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
@@ -179,19 +174,21 @@ public class Patterns
 
     private void CreateHarmony()
     {
-        int position = Scale switch
+        var dictionary = new Dictionary<int, Interval>
         {
-            Enums.Modes.Major => Dictionaries.Major.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.Minor => Dictionaries.Minor.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.MelodicMinor => Dictionaries.MelodicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.HungarianMinor => Dictionaries.HungarianMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            Enums.Modes.Phyrigian => Dictionaries.Phyrigian.FirstOrDefault(x => x.Value == IntervalCache).Key,
-            _ => 0
+            { 0, Interval.FromHalfSteps(Scale.Interval1) },
+            { 1, Interval.FromHalfSteps(Scale.Interval2) },
+            { 2, Interval.FromHalfSteps(Scale.Interval3) },
+            { 3, Interval.FromHalfSteps(Scale.Interval4) },
+            { 4, Interval.FromHalfSteps(Scale.Interval5) },
+            { 5, Interval.FromHalfSteps(Scale.Interval6) },
+            { 6, Interval.FromHalfSteps(Scale.Interval7) }
         };
 
+        int position = dictionary.FirstOrDefault(x => x.Value == IntervalCache).Key;
+
         var positionNew = (position + 2) % 7; // TODO Replace 7 with dictionary length (using a minus 1 due to 0-index)
-        IntervalCache = GetInterval(positionNew);
+        IntervalCache = Interval.FromHalfSteps(dictionary[positionNew]);
 
         if (positionNew < position)
         {
