@@ -63,7 +63,7 @@
                 DisplayDefaultValueOnEmptyText="True"
                 Minimum="4"
                 Maximum="400"
-                DefaultValue="140"
+                DefaultValue="120"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
 
@@ -74,14 +74,14 @@
             <xctk:IntegerUpDown
                 Name="NotesIntegerUpDown"
                 DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="256"
+                DefaultValue="8192"
                 Minimum="1"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
         </DockPanel>
 
         <Label
-            Content="Probability"
+            Content="Articulation Probability"
             HorizontalContentAlignment="Center"/>
 
         <DockPanel HorizontalAlignment="Center">
@@ -128,7 +128,7 @@
             <xctk:IntegerUpDown
                 Name="WeightGap"
                 DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="5"
+                DefaultValue="15"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
@@ -140,7 +140,211 @@
             <xctk:IntegerUpDown
                 Name="WeightHarmonic"
                 DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="3"
+                DefaultValue="0"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+        </DockPanel>
+
+        <Label
+            Content="Rhythm Scale Degree Probability"
+            HorizontalContentAlignment="Center"/>
+
+        <DockPanel HorizontalAlignment="Center">
+            <Label
+                Content="1"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm1"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="2"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm2"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="3"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm3"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="4"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm4"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="5"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm5"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="6"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm6"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="7"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm7"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Oct"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleRhythm8"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+        </DockPanel>
+
+        <Label
+            Content="Lead Scale Degree Probability"
+            HorizontalContentAlignment="Center"/>
+
+        <DockPanel HorizontalAlignment="Center">
+            <Label
+                Content="1"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead1"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="2"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead2"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="3"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead3"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="4"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead4"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="5"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead5"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="6"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead6"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="7"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead7"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
+                Minimum="0"
+                HorizontalAlignment="Stretch"
+                Width="50"/>
+
+            <Label
+                Content="Oct"
+                HorizontalContentAlignment="Center"/>
+
+            <xctk:IntegerUpDown
+                Name="WeightScaleLead8"
+                DisplayDefaultValueOnEmptyText="True"
+                DefaultValue="1"
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>

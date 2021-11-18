@@ -11,100 +11,163 @@ namespace Djent;
 
 public class Patterns
 {
-    private static int _octaveCache;
-    private static Interval? _intervalCache;
+    private int OctaveCache { get; set; }
+    private Interval? IntervalCache { get; set; }
+    private Enums.Modes Scale { get; }
 
-    public static Pattern Rhythm(Enums.Modes mode, Note rootNote, Enums.NoteType type, bool harmony = false, int addRange = 0)
+    public Patterns(Enums.Modes mode)
+    {
+        Scale = mode;
+    }
+
+    private Interval GetRandomInterval(Probability.Scale scale, bool skipZero = false)
+    {
+        int seed = 0;
+
+        Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
+            new Weighted.ChanceParam(() =>
+            {
+                seed = skipZero ? Randomise.Run(1, 7) : 0;
+            }, scale.Degree1),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 1;
+            }, scale.Degree2),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 2;
+            }, scale.Degree3),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 3;
+            }, scale.Degree4),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 4;
+            }, scale.Degree5),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 5;
+            }, scale.Degree6),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 6;
+            }, scale.Degree7),
+            new Weighted.ChanceParam(() =>
+            {
+                seed = 7;
+            }, scale.Degree8)
+        );
+        chanceExecutor.Execute();
+
+
+        return GetInterval(seed);
+    }
+
+    private Interval GetInterval(int seed)
+    {
+        Interval interval = Scale switch
+        {
+            Enums.Modes.Agnostic => Dictionaries.Agnostic[seed],
+            Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
+            Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor[seed],
+            Enums.Modes.Evil => Dictionaries.Evil[seed],
+            _ => Interval.Zero
+        };
+        return interval;
+    }
+
+    public Pattern Rhythm(Note rootNote, Probability.Scale scale, Enums.NoteType type, bool harmony = false, int addRange = 0)
     {
         if (harmony)
         {
-            CreateHarmony(mode);
+            CreateHarmony();
         }
         else
         {
             int octave = rootNote.Octave;
-            _octaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
+            OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
             bool skipZero = rootNote.Octave != octave;
-            _intervalCache = MainWindow.GetRandomInterval(mode, skipZero);
+            IntervalCache = GetRandomInterval(scale, skipZero);
         }
 
-        Note root = Note.Get(rootNote.NoteName, _octaveCache);
+        Note root = Note.Get(rootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(_intervalCache, new SevenBitNumber((byte) type))
+            .Note(IntervalCache, new SevenBitNumber((byte) type))
             .Build();
     }
 
-    public static Pattern Lead(Enums.Modes mode, Note rootNote, bool harmony = false)
+    public Pattern Lead(Note rootNote, Probability.Scale scale, bool harmony = false)
     {
         if (harmony)
         {
-            CreateHarmony(mode);
+            CreateHarmony();
         }
         else
         {
             int octave = rootNote.Octave;
-            _octaveCache = Randomise.Run(octave + 1, octave + 3);
-            _intervalCache = MainWindow.GetRandomInterval(mode);
+            OctaveCache = Randomise.Run(octave + 1, octave + 3);
+            IntervalCache = GetRandomInterval(scale);
         }
 
-        Note root = Note.Get(rootNote.NoteName, _octaveCache);
+        Note root = Note.Get(rootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(_intervalCache, new SevenBitNumber((byte) Enums.NoteType.Open))
+            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteType.Open))
             .Build();
     }
 
-    public static Pattern Harmonic(Enums.Modes mode, Note rootNote, bool harmony = false)
+    public Pattern Harmonic(Note rootNote, Probability.Scale scale, bool harmony = false)
     {
         if (harmony)
         {
-            CreateHarmony(mode);
+            CreateHarmony();
         }
         else
         {
             int octave = rootNote.Octave;
-            _octaveCache = octave + 2;
-            _intervalCache = MainWindow.GetRandomInterval(mode);
+            OctaveCache = octave + 2;
+            IntervalCache = GetRandomInterval(scale);
         }
 
-        Note root = Note.Get(rootNote.NoteName, _octaveCache);
+        Note root = Note.Get(rootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(_intervalCache, new SevenBitNumber((byte) Enums.NoteType.Harmonic))
+            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteType.Harmonic))
             .Build();
     }
 
-    public static Pattern Gap()
+    public Pattern Gap()
     {
         return new PatternBuilder()
             .StepForward(MusicalTimeSpan.Sixteenth)
             .Build();
     }
 
-    public static void CreateHarmony(Enums.Modes mode)
+    private void CreateHarmony()
     {
-        int position = mode switch
+        int position = Scale switch
         {
-            Enums.Modes.Agnostic => Dictionaries.Agnostic.FirstOrDefault(x => x.Value == _intervalCache).Key,
-            Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor.FirstOrDefault(x => x.Value == _intervalCache).Key,
-            Enums.Modes.Phyrigian => Dictionaries.Phyrigian.FirstOrDefault(x => x.Value == _intervalCache).Key,
-            Enums.Modes.Evil => Dictionaries.Evil.FirstOrDefault(x => x.Value == _intervalCache).Key,
+            Enums.Modes.Agnostic => Dictionaries.Agnostic.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.Phyrigian => Dictionaries.Phyrigian.FirstOrDefault(x => x.Value == IntervalCache).Key,
+            Enums.Modes.Evil => Dictionaries.Evil.FirstOrDefault(x => x.Value == IntervalCache).Key,
             _ => 0
         };
 
         var positionNew = (position + 2) % 7; // TODO Replace 7 with dictionary length
-        _intervalCache = MainWindow.GetInterval(mode, positionNew);
+        IntervalCache = GetInterval(positionNew);
 
         if (positionNew < position)
         {
-            _octaveCache++;
+            OctaveCache++;
         }
     }
 

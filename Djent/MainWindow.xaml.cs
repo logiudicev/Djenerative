@@ -26,16 +26,7 @@ namespace Djent
             RootNoteComboBox.ItemsSource = Enum.GetValues(typeof(NoteName));
         }
 
-        public class Probability
-        {
-            public double RhythmMuted { get; set; }
-            public double RhythmOpen { get; set; }
-            public double Lead { get; set; }
-            public double Gap { get; set; }
-            public double Harmonic { get; set; }
-        }
-
-        public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability probability)
+        public static Task CreateMidiFile(Enums.Modes mode, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
         {
             string file = $"{Enum.GetName(mode)}-{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmss}.mid";
 
@@ -46,37 +37,38 @@ namespace Djent
             
             List<Pattern> guitar1 = new List<Pattern>();
             List<Pattern> guitar2 = new List<Pattern>();
+            Patterns pattern = new Patterns(mode);
             for (int i = 0; i < length; i++)
             {
                 Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = Patterns.Rhythm(mode, rootNote, Enums.NoteType.Mute);
+                        var note = pattern.Rhythm(rootNote, probScaleRhythm, Enums.NoteType.Mute);
                         guitar1.Add(note);
                         guitar2.Add(note);
-                    }, probability.RhythmMuted),
+                    }, probArticulation.RhythmMuted),
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = Patterns.Rhythm(mode, rootNote, Enums.NoteType.Open);
+                        var note = pattern.Rhythm(rootNote, probScaleRhythm, Enums.NoteType.Open);
                         guitar1.Add(note);
                         guitar2.Add(note);
-                    }, probability.RhythmOpen),
+                    }, probArticulation.RhythmOpen),
                     new Weighted.ChanceParam(() =>
                     {
-                        guitar1.Add(Patterns.Lead(mode, rootNote));
-                        guitar2.Add(Patterns.Lead(mode, rootNote, true));
-                    }, probability.Lead),
+                        guitar1.Add(pattern.Lead(rootNote, probScaleLead));
+                        guitar2.Add(pattern.Lead(rootNote, probScaleLead, true));
+                    }, probArticulation.Lead),
                     new Weighted.ChanceParam(() =>
                     {
-                        var note = Patterns.Harmonic(mode, rootNote);
+                        var note = pattern.Harmonic(rootNote, probScaleLead);
                         guitar1.Add(note);
                         guitar2.Add(note);
-                    }, probability.Harmonic),
+                    }, probArticulation.Harmonic),
                     new Weighted.ChanceParam(() =>
                     {
-                        guitar1.Add(Patterns.Gap());
-                        guitar2.Add(Patterns.Gap());
-                    }, probability.Gap)
+                        guitar1.Add(pattern.Gap());
+                        guitar2.Add(pattern.Gap());
+                    }, probArticulation.Gap)
                 );
                 chanceExecutor.Execute();
             }
@@ -88,25 +80,6 @@ namespace Djent
             midiFile.Write(file);
 
             return Task.CompletedTask;
-        }
-
-        public static Interval GetRandomInterval(Enums.Modes mode, bool skipZero = false)
-        {
-            int seed = Randomise.Run(skipZero ? 1 : 0, 7);
-            return GetInterval(mode, seed);
-        }
-
-        public static Interval GetInterval(Enums.Modes mode, int seed)
-        {
-            Interval interval = mode switch
-            {
-                Enums.Modes.Agnostic => Dictionaries.Agnostic[seed],
-                Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
-                Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor[seed],
-                Enums.Modes.Evil => Dictionaries.Evil[seed],
-                _ => Interval.Zero
-            };
-            return interval;
         }
 
         private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern> patterns)
@@ -134,13 +107,38 @@ namespace Djent
             if (notes < 1) return;
             if (rootOctave is < 1 or > 3) return;
 
-            var probability = new Probability
+            var probArticulation = new Probability.Articulation
             {
                 RhythmMuted = (double) WeightRhythmMuted.Value!,
                 RhythmOpen = (double) WeightRhythmOpen.Value!,
                 Lead = (double) WeightLead.Value!,
                 Gap = (double) WeightGap.Value!,
-                Harmonic = (double) WeightHarmonic.Value!,
+                Harmonic = (double) WeightHarmonic.Value!
+            };
+
+            var probScaleRhythm = new Probability.Scale
+            {
+                Degree1 = (double) WeightScaleRhythm1.Value!,
+                Degree2 = (double) WeightScaleRhythm2.Value!,
+                Degree3 = (double) WeightScaleRhythm3.Value!,
+                Degree4 = (double) WeightScaleRhythm4.Value!,
+                Degree5 = (double) WeightScaleRhythm5.Value!,
+                Degree6 = (double) WeightScaleRhythm6.Value!,
+                Degree7 = (double) WeightScaleRhythm7.Value!,
+                Degree8 = (double) WeightScaleRhythm8.Value!
+            };
+
+            // NEED TO ADD UI AND UPDATE LINK TODO
+            var probScaleLead = new Probability.Scale
+            {
+                Degree1 = (double) WeightScaleLead1.Value!,
+                Degree2 = (double) WeightScaleLead2.Value!,
+                Degree3 = (double) WeightScaleLead3.Value!,
+                Degree4 = (double) WeightScaleLead4.Value!,
+                Degree5 = (double) WeightScaleLead5.Value!,
+                Degree6 = (double) WeightScaleLead6.Value!,
+                Degree7 = (double) WeightScaleLead7.Value!,
+                Degree8 = (double) WeightScaleLead8.Value!
             };
 
             await CreateMidiFile(
@@ -148,7 +146,9 @@ namespace Djent
                 Note.Get(rootNote, rootOctave),
                 bpm,
                 notes,
-                probability);
+                probArticulation,
+                probScaleRhythm,
+                probScaleLead);
         }
 
 
