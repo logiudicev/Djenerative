@@ -38,40 +38,57 @@ namespace Djent
             List<Pattern> guitar1 = new List<Pattern>();
             List<Pattern> guitar2 = new List<Pattern>();
             Patterns pattern = new Patterns(mode, rootNote, probScaleRhythm, probScaleLead);
-            for (int i = 0; i < length; i++)
+
+            Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
+
+            if (probArticulation.RhythmMuted != 0 && probScaleRhythm.Enabled)
             {
-                Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
-                    new Weighted.ChanceParam(() =>
-                    {
-                        var note = pattern.Rhythm(Enums.NoteType.Mute);
-                        guitar1.Add(note);
-                        guitar2.Add(note);
-                    }, probArticulation.RhythmMuted),
-                    new Weighted.ChanceParam(() =>
-                    {
-                        var note = pattern.Rhythm(Enums.NoteType.Open);
-                        guitar1.Add(note);
-                        guitar2.Add(note);
-                    }, probArticulation.RhythmOpen),
-                    new Weighted.ChanceParam(() =>
-                    {
-                        guitar1.Add(pattern.Lead());
-                        guitar2.Add(pattern.Lead(true));
-                    }, probArticulation.Lead),
-                    new Weighted.ChanceParam(() =>
-                    {
-                        guitar1.Add(pattern.Harmonic());
-                        guitar2.Add(pattern.Harmonic(true));
-                    }, probArticulation.Harmonic),
-                    new Weighted.ChanceParam(() =>
-                    {
-                        guitar1.Add(pattern.Gap());
-                        guitar2.Add(pattern.Gap());
-                    }, probArticulation.Gap)
-                );
-                chanceExecutor.Execute();
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    var note = pattern.Rhythm(Enums.NoteType.Mute);
+                    guitar1.Add(note);
+                    guitar2.Add(note);
+                }, probArticulation.RhythmMuted));
+            }
+            if (probArticulation.RhythmOpen != 0 && probScaleRhythm.Enabled)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    var note = pattern.Rhythm(Enums.NoteType.Open);
+                    guitar1.Add(note);
+                    guitar2.Add(note);
+                }, probArticulation.RhythmOpen));
+            }
+            if (probArticulation.Lead != 0 && probScaleLead.Enabled)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    guitar1.Add(pattern.Lead());
+                    guitar2.Add(pattern.Lead(true));
+                }, probArticulation.Lead));
+            }
+            if (probArticulation.Harmonic != 0 && probScaleLead.Enabled)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    guitar1.Add(pattern.Harmonic());
+                    guitar2.Add(pattern.Harmonic(true));
+                }, probArticulation.Harmonic));
+            }
+            if (probArticulation.Gap != 0)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    guitar1.Add(pattern.Gap());
+                    guitar2.Add(pattern.Gap());
+                }, probArticulation.Gap));
             }
 
+            for (int i = 0; i < length; i++)
+            {
+                chanceExecutor.Execute();
+            }
+            
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1));
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2));
 
@@ -123,8 +140,7 @@ namespace Djent
                 Degree4 = (double) WeightScaleRhythm4.Value!,
                 Degree5 = (double) WeightScaleRhythm5.Value!,
                 Degree6 = (double) WeightScaleRhythm6.Value!,
-                Degree7 = (double) WeightScaleRhythm7.Value!,
-                Degree8 = (double) WeightScaleRhythm8.Value!
+                Degree7 = (double) WeightScaleRhythm7.Value!
             };
 
             // NEED TO ADD UI AND UPDATE LINK TODO
@@ -136,8 +152,7 @@ namespace Djent
                 Degree4 = (double) WeightScaleLead4.Value!,
                 Degree5 = (double) WeightScaleLead5.Value!,
                 Degree6 = (double) WeightScaleLead6.Value!,
-                Degree7 = (double) WeightScaleLead7.Value!,
-                Degree8 = (double) WeightScaleLead8.Value!
+                Degree7 = (double) WeightScaleLead7.Value!
             };
 
             await CreateMidiFile(

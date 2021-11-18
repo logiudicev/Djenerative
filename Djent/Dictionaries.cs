@@ -5,16 +5,15 @@ namespace Djent;
 
 public static class Dictionaries
 {
-    public static readonly Dictionary<int, Interval> Agnostic = new()
+    public static readonly Dictionary<int, Interval> HarmonicMinor = new()
     {
         { 0, Interval.Zero },
-        { 1, Interval.Three },
-        { 2, Interval.Five },
-        { 3, Interval.Seven },
-        { 4, Interval.Eight },
-        { 5, Interval.Ten },
-        { 6, Interval.Twelve },
-        //{ 7, Interval.Two },
+        { 1, Interval.Two },
+        { 2, Interval.Three },
+        { 3, Interval.Five },
+        { 4, Interval.Seven },
+        { 5, Interval.Eight },
+        { 6, Interval.Eleven }
     };
 
     public static readonly Dictionary<int, Interval> Phyrigian = new()
@@ -25,20 +24,7 @@ public static class Dictionaries
         { 3, Interval.Five },
         { 4, Interval.Seven },
         { 5, Interval.Eight },
-        { 6, Interval.Ten },
-        { 7, Interval.Twelve },
-    };
-
-    public static readonly Dictionary<int, Interval> HarmonicMinor = new()
-    {
-        { 0, Interval.Zero },
-        { 1, Interval.Two },
-        { 2, Interval.Three },
-        { 3, Interval.Five },
-        { 4, Interval.Seven },
-        { 5, Interval.Eight },
-        { 6, Interval.Eleven },
-        { 7, Interval.Twelve },
+        { 6, Interval.Ten }
     };
 
     public static readonly Dictionary<int, Interval> Evil = new()
@@ -49,7 +35,6 @@ public static class Dictionaries
         { 3, Interval.Five },
         { 4, Interval.Seven },
         { 5, Interval.Eight },
-        { 6, Interval.Eleven },
-        { 7, Interval.Twelve },
+        { 6, Interval.Eleven }
     };
 }

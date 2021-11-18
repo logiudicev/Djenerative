@@ -7,6 +7,7 @@ public static class Enums
 {
     public enum NoteType
     {
+        Bass = 127,
         Harmonic = 127,
         Open = 100,
         Mute = 20

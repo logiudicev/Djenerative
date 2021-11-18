@@ -234,18 +234,6 @@
                 Minimum="0"
                 HorizontalAlignment="Stretch"
                 Width="50"/>
-
-            <Label
-                Content="Oct"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm8"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
         </DockPanel>
 
         <Label
@@ -331,18 +319,6 @@
 
             <xctk:IntegerUpDown
                 Name="WeightScaleLead7"
-                DisplayDefaultValueOnEmptyText="True"
-                DefaultValue="1"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="Oct"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead8"
                 DisplayDefaultValueOnEmptyText="True"
                 DefaultValue="1"
                 Minimum="0"

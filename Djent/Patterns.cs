@@ -13,10 +13,10 @@ public class Patterns
 {
     private int OctaveCache { get; set; }
     private Interval? IntervalCache { get; set; }
-    private Enums.Modes Scale { get; }
-    private Note RootNote { get; }
-    private Probability.Scale ProbScaleRhythm { get; }
-    private Probability.Scale ProbScaleLead { get; }
+    public Enums.Modes Scale { get; }
+    public Note RootNote { get; }
+    public Probability.Scale ProbScaleRhythm { get; }
+    public Probability.Scale ProbScaleLead { get; }
 
     public Patterns(Enums.Modes mode, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
     {
@@ -26,46 +26,63 @@ public class Patterns
         ProbScaleLead = probScaleLead;
     }
 
-    private Interval GetRandomInterval(Probability.Scale scale, bool skipZero = false)
+    private Interval GetRandomInterval(Probability.Scale scale)
     {
         int seed = 0;
 
-        Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor(
-            new Weighted.ChanceParam(() =>
+        Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
+
+        if (scale.Degree1 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
-                seed = skipZero ? Randomise.Run(1, 7) : 0;
-            }, scale.Degree1),
-            new Weighted.ChanceParam(() =>
+                seed = 0;
+            }, scale.Degree1));
+        }
+        if (scale.Degree2 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 1;
-            }, scale.Degree2),
-            new Weighted.ChanceParam(() =>
+            }, scale.Degree2));
+        }
+        if (scale.Degree3 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 2;
-            }, scale.Degree3),
-            new Weighted.ChanceParam(() =>
+            }, scale.Degree3));
+        }
+        if (scale.Degree4 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 3;
-            }, scale.Degree4),
-            new Weighted.ChanceParam(() =>
+            }, scale.Degree4));
+        }
+        if (scale.Degree5 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 4;
-            }, scale.Degree5),
-            new Weighted.ChanceParam(() =>
+            }, scale.Degree5));
+        }
+        if (scale.Degree6 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 5;
-            }, scale.Degree6),
-            new Weighted.ChanceParam(() =>
+            }, scale.Degree6));
+        }
+        if (scale.Degree7 > 0)
+        {
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
             {
                 seed = 6;
-            }, scale.Degree7),
-            new Weighted.ChanceParam(() =>
-            {
-                seed = 7;
-            }, scale.Degree8)
-        );
-        chanceExecutor.Execute();
+            }, scale.Degree7));
+        }
 
+        chanceExecutor.Execute();
 
         return GetInterval(seed);
     }
@@ -74,7 +91,6 @@ public class Patterns
     {
         Interval interval = Scale switch
         {
-            Enums.Modes.Agnostic => Dictionaries.Agnostic[seed],
             Enums.Modes.Phyrigian => Dictionaries.Phyrigian[seed],
             Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor[seed],
             Enums.Modes.Evil => Dictionaries.Evil[seed],
@@ -94,7 +110,7 @@ public class Patterns
             int octave = RootNote.Octave;
             OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
             bool skipZero = RootNote.Octave != octave;
-            IntervalCache = GetRandomInterval(ProbScaleRhythm, skipZero);
+            IntervalCache = GetRandomInterval(ProbScaleRhythm);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
@@ -161,14 +177,13 @@ public class Patterns
     {
         int position = Scale switch
         {
-            Enums.Modes.Agnostic => Dictionaries.Agnostic.FirstOrDefault(x => x.Value == IntervalCache).Key,
             Enums.Modes.HarmonicMinor => Dictionaries.HarmonicMinor.FirstOrDefault(x => x.Value == IntervalCache).Key,
             Enums.Modes.Phyrigian => Dictionaries.Phyrigian.FirstOrDefault(x => x.Value == IntervalCache).Key,
             Enums.Modes.Evil => Dictionaries.Evil.FirstOrDefault(x => x.Value == IntervalCache).Key,
             _ => 0
         };
 
-        var positionNew = (position + 2) % 7; // TODO Replace 7 with dictionary length
+        var positionNew = (position + 2) % 6; // TODO Replace 7 with dictionary length (using a minus 1 due to 0-index)
         IntervalCache = GetInterval(positionNew);
 
         if (positionNew < position)

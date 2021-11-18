@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Djent;
@@ -19,7 +20,7 @@ internal class Weighted
 
     public class ChanceExecutor
     {
-        public ChanceParam[] Parameters { get; }
+        public List<ChanceParam> Parameters { get; set; }
         private Random r;
 
         public double RatioSum
@@ -27,10 +28,26 @@ internal class Weighted
             get { return Parameters.Sum(p => p.Ratio); }
         }
 
-        public ChanceExecutor(params ChanceParam[] parameters)
+        public ChanceExecutor(List<ChanceParam> parameters)
         {
             Parameters = parameters;
             r = new Random();
+        }
+
+        public ChanceExecutor()
+        {
+            Parameters = new List<ChanceParam>();
+            r = new Random();
+        }
+
+        public void Add(ChanceParam parameters)
+        {
+            /*
+            Parameters = parameters;
+            r = new Random();
+            */
+
+            Parameters.Add(parameters);
         }
 
         public void Execute()

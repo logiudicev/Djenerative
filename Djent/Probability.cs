@@ -13,6 +13,15 @@
 
         public class Scale
         {
+            public bool Enabled =>
+                Degree1 > 0 ||
+                Degree2 > 0 ||
+                Degree3 > 0 ||
+                Degree4 > 0 ||
+                Degree5 > 0 ||
+                Degree6 > 0 ||
+                Degree7 > 0;
+
             public double Degree1 { get; set; }
             public double Degree2 { get; set; }
             public double Degree3 { get; set; }
@@ -20,7 +29,6 @@
             public double Degree5 { get; set; }
             public double Degree6 { get; set; }
             public double Degree7 { get; set; }
-            public double Degree8 { get; set; }
         }
     }
 }
