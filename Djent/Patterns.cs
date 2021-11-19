@@ -27,6 +27,73 @@ public class Patterns
         ProbScaleLead = probScaleLead;
     }
 
+    public class NoteGroup
+    {
+        public Pattern? Guitar1 { get; set; }
+        public Pattern? Guitar2 { get; set; }
+        public Pattern? Bass { get; set; }
+        public Pattern? Drums { get; set; }
+    }
+
+    public NoteGroup GenerateNote(Enums.NoteRequest request, bool harmony = false)
+    {
+        Pattern guitar1;
+        Pattern guitar2;
+        Pattern bass;
+        Pattern drums;
+
+        switch (request)
+        {
+            case Enums.NoteRequest.Gap:
+                guitar1 = guitar2 = bass = drums = Gap();
+                break;
+            case Enums.NoteRequest.RhythmOpen:
+                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Open);
+                bass = Bass();
+                drums = Drums();
+                break;
+            case Enums.NoteRequest.RhythmMute:
+                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Mute);
+                bass = Bass();
+                drums = Drums();
+                break;
+            case Enums.NoteRequest.Lead:
+                if (harmony)
+                {
+                    guitar1 = Lead();
+                    guitar2 = Lead(harmony);
+                }
+                else
+                {
+                    guitar1 = guitar2 = Lead();
+                }
+                bass = drums = Gap();
+                break;
+            case Enums.NoteRequest.Harmonic:
+                if (harmony)
+                {
+                    guitar1 = Harmonic();
+                    guitar2 = Harmonic(harmony);
+                }
+                else
+                {
+                    guitar1 = guitar2 = Harmonic();
+                }
+                bass = drums = Gap();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(request), request, null);
+        }
+
+        return new NoteGroup
+        {
+            Guitar1 = guitar1,
+            Guitar2 = guitar2,
+            Bass = bass,
+            Drums = drums
+        };
+    }
+
     private Interval GetInterval(Probability.Scale scale)
     {
         int seed = 0;
@@ -98,7 +165,7 @@ public class Patterns
         };
     }
 
-    public Pattern Rhythm(Enums.NoteType type, bool harmony = false, int addRange = 0)
+    public Pattern Rhythm(Enums.NoteVelocity velocity, bool harmony = false, int addRange = 0)
     {
         if (harmony)
         {
@@ -117,7 +184,35 @@ public class Patterns
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(IntervalCache, new SevenBitNumber((byte) type))
+            .Note(IntervalCache, new SevenBitNumber((byte) velocity))
+            .Build();
+    }
+
+    public Pattern Bass()
+    {
+        Note root = Note.Get(RootNote.NoteName, OctaveCache - 1);
+
+        return new PatternBuilder()
+            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetRootNote(root)
+            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Full))
+            .Build();
+    }
+
+    public Pattern Drums()
+    {
+        /*.Chord(new[]
+        {
+            Note.Get(NoteName.B, 3), // B3
+            Note.Get(NoteName.C, 4), // C4
+        })*/
+
+
+        Note kick = Note.Get(NoteName.C, 2);
+
+        return new PatternBuilder()
+            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .Note(kick, new SevenBitNumber((byte) Enums.NoteVelocity.Full))
             .Build();
     }
 
@@ -139,7 +234,7 @@ public class Patterns
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteType.Open))
+            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Open))
             .Build();
     }
 
@@ -161,7 +256,7 @@ public class Patterns
         return new PatternBuilder()
             .SetNoteLength(MusicalTimeSpan.Sixteenth)
             .SetRootNote(root)
-            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteType.Harmonic))
+            .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Harmonic))
             .Build();
     }
 

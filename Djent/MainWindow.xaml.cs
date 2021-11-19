@@ -92,12 +92,17 @@ namespace Djent
 
             var midiFile = new MidiFile(new TrackChunk());
             var tempoMap = TempoMap.Create(Tempo.FromBeatsPerMinute(bpm));
-            midiFile.ReplaceTempoMap(tempoMap);
-            midiFile.Chunks.Add(new TrackChunk());
+            //midiFile.ReplaceTempoMap(tempoMap);
+            //midiFile.Chunks.Add(new TrackChunk());
             
-            List<Pattern> guitar1 = new List<Pattern>();
-            List<Pattern> guitar2 = new List<Pattern>();
+            List<Pattern?> guitar1 = new List<Pattern?>();
+            List<Pattern?> guitar2 = new List<Pattern?>();
+            List<Pattern?> bass = new List<Pattern?>();
+            List<Pattern?> drums = new List<Pattern?>();
+
             Patterns pattern = new Patterns(scale, rootNote, probScaleRhythm, probScaleLead);
+
+            Patterns.NoteGroup group = new Patterns.NoteGroup();
 
             Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
 
@@ -105,52 +110,52 @@ namespace Djent
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
-                    var note = pattern.Rhythm(Enums.NoteType.Mute);
-                    guitar1.Add(note);
-                    guitar2.Add(note);
+                    group = pattern.GenerateNote(Enums.NoteRequest.RhythmMute);
                 }, probArticulation.RhythmMuted));
             }
             if (probArticulation.RhythmOpen != 0 && probScaleRhythm.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
-                    var note = pattern.Rhythm(Enums.NoteType.Open);
-                    guitar1.Add(note);
-                    guitar2.Add(note);
+                    group = pattern.GenerateNote(Enums.NoteRequest.RhythmOpen);
                 }, probArticulation.RhythmOpen));
             }
             if (probArticulation.Lead != 0 && probScaleLead.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
-                    guitar1.Add(pattern.Lead());
-                    guitar2.Add(pattern.Lead(true));
+                    group = pattern.GenerateNote(Enums.NoteRequest.Lead, true);
                 }, probArticulation.Lead));
             }
             if (probArticulation.Harmonic != 0 && probScaleLead.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
-                    guitar1.Add(pattern.Harmonic());
-                    guitar2.Add(pattern.Harmonic(true));
+                    group = pattern.GenerateNote(Enums.NoteRequest.Harmonic, true);
                 }, probArticulation.Harmonic));
             }
             if (probArticulation.Gap != 0)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
-                    guitar1.Add(pattern.Gap());
-                    guitar2.Add(pattern.Gap());
+                    group = pattern.GenerateNote(Enums.NoteRequest.Gap, true);
                 }, probArticulation.Gap));
             }
 
             for (int i = 0; i < length; i++)
             {
                 chanceExecutor.Execute();
+
+                guitar1.Add(group.Guitar1);
+                guitar2.Add(group.Guitar2);
+                bass.Add(group.Bass);
+                drums.Add(group.Drums);
             }
             
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1));
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1, Enums.GmInst.OverdrivenGuitar));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2, Enums.GmInst.OverdrivenGuitar));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, bass, Enums.GmInst.ElectricBassPick));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, drums, Enums.GmInst.ElectricBassPick));
 
             File.Delete(@"C:\Users\anon\Desktop\test.mid");
             midiFile.Write(@"C:\Users\anon\Desktop\test.mid");
@@ -158,14 +163,14 @@ namespace Djent
             return Task.CompletedTask;
         }
 
-        private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern> patterns)
+        private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern?> patterns, Enums.GmInst instrument)
         {
             var patternList = patterns.CombineInSequence();
             var trackChunk = patternList.ToTrackChunk(tempoMap);
 
             using var timedEventsManager = trackChunk.ManageTimedEvents();
             timedEventsManager.Events.AddEvent(
-                new ProgramChangeEvent((SevenBitNumber)26), // 'Acoustic Guitar (steel)' in GM
+                new ProgramChangeEvent((SevenBitNumber) (byte) instrument),
                 time: 0);
 
             return trackChunk;
@@ -206,7 +211,7 @@ namespace Djent
                     Enums.Modes.Minor => Scales.Minor(),
                     Enums.Modes.MelodicMinor => Scales.MelodicMinor(),
                     Enums.Modes.HarmonicMinor => Scales.HarmonicMinor(),
-                    //Enums.Modes.HungarianMinor => Scales.HungarianMinor(),
+                    Enums.Modes.HungarianMinor => Scales.HungarianMinor(),
                     Enums.Modes.Phyrigian => Scales.Phyrigian(),
                     _ => throw new ArgumentOutOfRangeException()
                 };
