@@ -54,6 +54,13 @@ namespace Djent
             WeightScaleLead5.Value = Properties.Preset.Default.WeightLead5;
             WeightScaleLead6.Value = Properties.Preset.Default.WeightLead6;
             WeightScaleLead7.Value = Properties.Preset.Default.WeightLead7;
+            Interval1.Value = Properties.Preset.Default.Interval1;
+            Interval2.Value = Properties.Preset.Default.Interval2;
+            Interval3.Value = Properties.Preset.Default.Interval3;
+            Interval4.Value = Properties.Preset.Default.Interval4;
+            Interval5.Value = Properties.Preset.Default.Interval5;
+            Interval6.Value = Properties.Preset.Default.Interval6;
+            Interval7.Value = Properties.Preset.Default.Interval7;
         }
 
         public void SaveSettings()
@@ -82,6 +89,13 @@ namespace Djent
             Properties.Preset.Default.WeightLead5 = (int) WeightScaleLead5.Value!;
             Properties.Preset.Default.WeightLead6 = (int) WeightScaleLead6.Value!;
             Properties.Preset.Default.WeightLead7 = (int) WeightScaleLead7.Value!;
+            Properties.Preset.Default.Interval1 = (int) Interval1.Value!;
+            Properties.Preset.Default.Interval2 = (int) Interval2.Value!;
+            Properties.Preset.Default.Interval3 = (int) Interval3.Value!;
+            Properties.Preset.Default.Interval4 = (int) Interval4.Value!;
+            Properties.Preset.Default.Interval5 = (int) Interval5.Value!;
+            Properties.Preset.Default.Interval6 = (int) Interval6.Value!;
+            Properties.Preset.Default.Interval7 = (int) Interval7.Value!;
 
             Properties.Preset.Default.Save();
         }
@@ -266,6 +280,78 @@ namespace Djent
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             GetSettings();
+        }
+
+        private void Interval_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            ModesComboBox.SelectedIndex = (int) Enums.Modes.Custom;
+            e.Handled = true;
+        }
+
+        private void ModesComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            switch ((Enums.Modes) ModesComboBox.SelectedIndex)
+            {
+                case Enums.Modes.Custom:
+                    break;
+                case Enums.Modes.Major:
+                    Interval1.Value = Scales.Major().Interval1;
+                    Interval2.Value = Scales.Major().Interval2;
+                    Interval3.Value = Scales.Major().Interval3;
+                    Interval4.Value = Scales.Major().Interval4;
+                    Interval5.Value = Scales.Major().Interval5;
+                    Interval6.Value = Scales.Major().Interval6;
+                    Interval7.Value = Scales.Major().Interval7;
+                    break;
+                case Enums.Modes.Minor:
+                    Interval1.Value = Scales.Minor().Interval1;
+                    Interval2.Value = Scales.Minor().Interval2;
+                    Interval3.Value = Scales.Minor().Interval3;
+                    Interval4.Value = Scales.Minor().Interval4;
+                    Interval5.Value = Scales.Minor().Interval5;
+                    Interval6.Value = Scales.Minor().Interval6;
+                    Interval7.Value = Scales.Minor().Interval7;
+                    break;
+                case Enums.Modes.MelodicMinor:
+                    Interval1.Value = Scales.MelodicMinor().Interval1;
+                    Interval2.Value = Scales.MelodicMinor().Interval2;
+                    Interval3.Value = Scales.MelodicMinor().Interval3;
+                    Interval4.Value = Scales.MelodicMinor().Interval4;
+                    Interval5.Value = Scales.MelodicMinor().Interval5;
+                    Interval6.Value = Scales.MelodicMinor().Interval6;
+                    Interval7.Value = Scales.MelodicMinor().Interval7;
+                    break;
+                case Enums.Modes.HarmonicMinor:
+                    Interval1.Value = Scales.HarmonicMinor().Interval1;
+                    Interval2.Value = Scales.HarmonicMinor().Interval2;
+                    Interval3.Value = Scales.HarmonicMinor().Interval3;
+                    Interval4.Value = Scales.HarmonicMinor().Interval4;
+                    Interval5.Value = Scales.HarmonicMinor().Interval5;
+                    Interval6.Value = Scales.HarmonicMinor().Interval6;
+                    Interval7.Value = Scales.HarmonicMinor().Interval7;
+                    break;
+                case Enums.Modes.HungarianMinor:
+                    Interval1.Value = Scales.HungarianMinor().Interval1;
+                    Interval2.Value = Scales.HungarianMinor().Interval2;
+                    Interval3.Value = Scales.HungarianMinor().Interval3;
+                    Interval4.Value = Scales.HungarianMinor().Interval4;
+                    Interval5.Value = Scales.HungarianMinor().Interval5;
+                    Interval6.Value = Scales.HungarianMinor().Interval6;
+                    Interval7.Value = Scales.HungarianMinor().Interval7;
+                    break;
+                case Enums.Modes.Phyrigian:
+                    Interval1.Value = Scales.Phyrigian().Interval1;
+                    Interval2.Value = Scales.Phyrigian().Interval2;
+                    Interval3.Value = Scales.Phyrigian().Interval3;
+                    Interval4.Value = Scales.Phyrigian().Interval4;
+                    Interval5.Value = Scales.Phyrigian().Interval5;
+                    Interval6.Value = Scales.Phyrigian().Interval6;
+                    Interval7.Value = Scales.Phyrigian().Interval7;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            e.Handled = true;
         }
 
 

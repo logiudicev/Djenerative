@@ -322,5 +322,89 @@ namespace Djent.Properties {
                 this["WeightLead7"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval1 {
+            get {
+                return ((int)(this["Interval1"]));
+            }
+            set {
+                this["Interval1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval2 {
+            get {
+                return ((int)(this["Interval2"]));
+            }
+            set {
+                this["Interval2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval3 {
+            get {
+                return ((int)(this["Interval3"]));
+            }
+            set {
+                this["Interval3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval4 {
+            get {
+                return ((int)(this["Interval4"]));
+            }
+            set {
+                this["Interval4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval5 {
+            get {
+                return ((int)(this["Interval5"]));
+            }
+            set {
+                this["Interval5"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval6 {
+            get {
+                return ((int)(this["Interval6"]));
+            }
+            set {
+                this["Interval6"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Interval7 {
+            get {
+                return ((int)(this["Interval7"]));
+            }
+            set {
+                this["Interval7"] = value;
+            }
+        }
     }
 }

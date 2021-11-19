@@ -17,7 +17,6 @@
             Content="Settings"
             HorizontalContentAlignment="Center"/>
 
-
         <DockPanel HorizontalAlignment="Center">
             <Label
                 Content="Root Note"
@@ -126,90 +125,94 @@
             Name="ModesComboBox"
             Width="130"
             HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"/>
+            VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
 
-        <Label
-            Content="Scale Builder"
-            HorizontalContentAlignment="Center"/>
+        <Grid ShowGridLines="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <DockPanel HorizontalAlignment="Center">
-            <Label
-                Content="1"
-                HorizontalContentAlignment="Center"/>
+            <Label Content="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="2" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="3" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="4" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="5" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="6" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="7" Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="Scale Builder" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <Label Content="Probability Rhythm" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <Label Content="Probability Lead" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
             <xctk:IntegerUpDown
                 Name="Interval1"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="2"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="1"/>
 
             <xctk:IntegerUpDown
                 Name="Interval2"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="3"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="2"/>
 
             <xctk:IntegerUpDown
                 Name="Interval3"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="4"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="3"/>
 
             <xctk:IntegerUpDown
                 Name="Interval4"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="5"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="4"/>
 
             <xctk:IntegerUpDown
                 Name="Interval5"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="6"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="5"/>
 
             <xctk:IntegerUpDown
                 Name="Interval6"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="7"
-                HorizontalContentAlignment="Center"/>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="6"/>
 
             <xctk:IntegerUpDown
                 Name="Interval7"
                 Minimum="0"
                 Maximum="11"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-        </DockPanel>
+                Width="50"
+                ValueChanged="Interval_ValueChanged"
+                Grid.Row="1" Grid.Column="7"/>
+
+        </Grid>
 
         <Label
             Content="Rhythm Scale Degree Probability"
