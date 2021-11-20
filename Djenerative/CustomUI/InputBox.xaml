@@ -17,6 +17,6 @@
 
     <StackPanel HorizontalAlignment="Center" Margin="10">
         <TextBox Name="InputText"
-                 HorizontalContentAlignment="Center" Width="100"/>
+                 HorizontalContentAlignment="Center" Width="100" KeyDown="InputText_KeyDown"/>
     </StackPanel>
 </controls:AdonisWindow>

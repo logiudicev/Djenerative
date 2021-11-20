@@ -295,15 +295,13 @@ namespace Djenerative
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            var test = new InputBox("Save Preset");
-            test.Show();
+            _ = new InputBox(this, "Save Preset");
+        }
 
-            /*
-            string name = new InputBox("Preset", "Preset Name", "Arial", 20).ShowDialog();
+        public async void Save(string name)
+        {
             UpdateLastPreset(name);
-            await SavePreset(name); //TODO set file name
-            */
-
+            await SavePreset(name);
         }
 
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
