@@ -1,0 +1,22 @@
+﻿<controls:AdonisWindow x:Class="Djenerative.CustomUI.InputBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:local="clr-namespace:Djenerative.CustomUI"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#2a2b34"
+
+        MouseDown="AdonisWindow_MouseDown"
+        WindowStyle="ToolWindow">
+
+    <StackPanel HorizontalAlignment="Center" Margin="10">
+        <TextBox Name="InputText"
+                 HorizontalContentAlignment="Center" Width="100"/>
+    </StackPanel>
+</controls:AdonisWindow>

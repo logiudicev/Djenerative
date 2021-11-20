@@ -27,10 +27,13 @@ namespace Djenerative
         {
             Directory.CreateDirectory(PresetDirectoryName);
             await CreatePreset(new Preset(), PresetDefault);
+        }
 
-            var filesPaths = Directory.GetFiles(_presetDirectoryFullPath);
-            PresetList.Add(PresetDefault);
-            foreach (var file in filesPaths)
+        public void EnumeratePresets()
+        {
+            var filePaths = Directory.GetFiles(_presetDirectoryFullPath);
+            PresetList = new List<string> {PresetDefault};
+            foreach (var file in filePaths)
             {
                 if (file.EndsWith(PresetExt) && !file.Contains(PresetDefault))
                 {
@@ -39,21 +42,16 @@ namespace Djenerative
             }
 
             ComboBox.ItemsSource = PresetList;
-            if (!PresetList.Contains(Properties.Preset.Default.LastPreset))
-            {
-                ComboBox.SelectedItem = PresetDefault;
-            }
-            else
-            {
-                ComboBox.SelectedItem = Properties.Preset.Default.LastPreset;
-            }
+            ComboBox.SelectedItem = !PresetList.Contains(Properties.Preset.Default.LastPreset)
+                ? PresetDefault : Properties.Preset.Default.LastPreset;
         }
 
         public async Task<Preset> LoadPreset(string name)
         {
             string fullPath = $"{Path.Combine(_presetDirectoryFullPath, name)}{PresetExt}";
             await using FileStream stream = File.OpenRead(fullPath);
-            return await JsonSerializer.DeserializeAsync<Preset>(stream) ?? new Preset();
+            LoadedPreset = await JsonSerializer.DeserializeAsync<Preset>(stream) ?? new Preset();
+            return LoadedPreset;
         }
 
         public async Task CreatePreset(Preset preset, string name)
@@ -62,6 +60,8 @@ namespace Djenerative
             await using FileStream stream = File.Create(fileName);
             await JsonSerializer.SerializeAsync(stream, preset);
             await stream.DisposeAsync();
+
+            EnumeratePresets();
         }
 
         public class Preset

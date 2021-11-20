@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using AdonisUI.Controls;
+using Djenerative.CustomUI;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Composing;
 using Melanchall.DryWetMidi.Core;
@@ -36,7 +37,7 @@ namespace Djenerative
 
             // Enumerate presets
             Preset = new Presets(PresetComboBox);
-            GetSettings(Preset.LoadedPreset);
+            GetPreset(Preset.LoadedPreset);
 
             // Link combo boxes to enum
             ModesComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Modes));
@@ -45,7 +46,7 @@ namespace Djenerative
             //PresetComboBox.SelectedIndex = Preset.PresetList.FindIndex(s => s == "Default");
         }
 
-        public void GetSettings(Presets.Preset preset)
+        public void GetPreset(Presets.Preset preset)
         {
             Bpm.Value = preset.Bpm;
             ModesComboBox.SelectedIndex = preset.Mode;
@@ -80,7 +81,7 @@ namespace Djenerative
             Interval7.Value = preset.Interval7;
         }
 
-        public async Task SaveSettings(string name)
+        public async Task SavePreset(string name)
         {
             Presets.Preset preset = new()
             {
@@ -292,14 +293,22 @@ namespace Djenerative
                 probScaleLead);
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            //SaveSettings(); //TODO
+            var test = new InputBox("Save Preset");
+            test.Show();
+
+            /*
+            string name = new InputBox("Preset", "Preset Name", "Arial", 20).ShowDialog();
+            UpdateLastPreset(name);
+            await SavePreset(name); //TODO set file name
+            */
+
         }
 
-        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
-            //GetSettings(); //TODO
+            GetPreset(Preset.LoadedPreset);
         }
 
         private void Interval_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -388,18 +397,24 @@ namespace Djenerative
                 }
             }
         }
+
         private async void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string presetName = (string) PresetComboBox.SelectedItem;
-            Properties.Preset.Default.LastPreset = presetName;
-            Properties.Preset.Default.Save();
+            string name = (string) PresetComboBox.SelectedItem;
+            UpdateLastPreset(name);
 
-            GetSettings(await Preset.LoadPreset(presetName));
+            GetPreset(await Preset.LoadPreset(name));
 
             e.Handled = true;
         }
 
         #region Round Corners
+
+        private void UpdateLastPreset(string name)
+        {
+            Properties.Preset.Default.LastPreset = name;
+            Properties.Preset.Default.Save();
+        }
 
         private void SetWindowStyle(Corner preference)
         {

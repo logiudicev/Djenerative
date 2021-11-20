@@ -44,6 +44,23 @@
                 VerticalAlignment="Top"
                 Height="25" SelectionChanged="PresetComboBox_SelectionChanged"/>
 
+            <DockPanel HorizontalAlignment="Center">
+                <Button
+                    Name="ReloadButton"
+                    Content="Reload"
+                    Width="60"
+                    Margin="10, 8, 10, 0"
+                    Click="ReloadButton_Click"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+
+                <Button
+                    Name="SaveButton"
+                    Content="Save"
+                    Width="60"
+                    Margin="10, 8, 10, 0"
+                    Click="SaveButton_Click"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+            </DockPanel>
         </StackPanel>
 
         <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
@@ -399,24 +416,6 @@
 
 
         </Grid>
-
-        <DockPanel Margin="0, 8, 0, 0" HorizontalAlignment="Center">
-            <Button
-                Name="SaveButton"
-                Content="Save"
-                Width="60"
-                Margin="0, 0, 10, 0"
-                Click="SaveButton_Click"
-                Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
-
-            <Button
-                Name="LoadButton"
-                Content="Load"
-                Width="60"
-                Margin="10, 0, 0, 0"
-                Click="LoadButton_Click"
-                Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
-        </DockPanel>
 
         <Button
             Name="GenerateButton"
