@@ -254,7 +254,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="2"/>
+                Grid.Row="1" Grid.Column="2"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval3"
@@ -263,7 +264,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="3"/>
+                Grid.Row="1" Grid.Column="3"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval4"
@@ -272,7 +274,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="4"/>
+                Grid.Row="1" Grid.Column="4"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval5"
@@ -281,7 +284,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="5"/>
+                Grid.Row="1" Grid.Column="5"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval6"
@@ -290,7 +294,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="6"/>
+                Grid.Row="1" Grid.Column="6"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval7"
@@ -299,7 +304,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="7"/>
+                Grid.Row="1" Grid.Column="7"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="WeightScaleRhythm1"
