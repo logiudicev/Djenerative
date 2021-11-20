@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             xmlns:my="clr-namespace:Djent" Width="200" Height="44">
+             xmlns:my="clr-namespace:Djent" Width="auto" Height="auto">
     <StackPanel>
         <DockPanel d:LayoutOverrides="Width">
             <Button x:Name="buttonDecrement" 

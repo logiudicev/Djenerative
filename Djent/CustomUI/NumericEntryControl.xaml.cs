@@ -40,7 +40,6 @@ namespace Djent
         private DispatcherTimer _timer = new();
         private static int _delayRate = SystemParameters.KeyboardDelay;
         private static int _repeatSpeed = Math.Max(1, SystemParameters.KeyboardSpeed);
-        private static bool _labelStatus = true;
 
         private bool _isIncrementing;
 
@@ -49,7 +48,6 @@ namespace Djent
             get => (string)GetValue(LabelProperty);
             set => SetValue(LabelProperty, value);
         }
-        public bool LabelStatus => _labelStatus;
 
         public int Value
         {
@@ -97,11 +95,6 @@ namespace Djent
             buttonDecrement.PreviewMouseLeftButtonUp += buttonDecrement_PreviewMouseLeftButtonUp;
 
             _timer.Tick += _timer_Tick;
-
-            if (Label == string.Empty)
-            {
-                _labelStatus = false;
-            }
         }
 
         void buttonIncrement_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -235,6 +228,11 @@ namespace Djent
         {
             buttonIncrement.IsEnabled = Value != Maximum;
             buttonDecrement.IsEnabled = Value != Minimum;
+
+            if (Label == string.Empty)
+            {
+                _label.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void _textbox_TextChanged(object sender, TextChangedEventArgs e)

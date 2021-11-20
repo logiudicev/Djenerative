@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 using AdonisUI.Controls;
 using Djent.Properties;
 using Melanchall.DryWetMidi.Common;
@@ -23,6 +27,9 @@ namespace Djent
         public MainWindow()
         {
             InitializeComponent();
+
+            // Sets rounded corners
+            SetWindowStyle(Corner.Round);
 
             ModesComboBox.ItemsSource = Enum.GetValues(typeof(Enums.Modes));
             RootNoteComboBox.ItemsSource = Enum.GetValues(typeof(NoteName));
@@ -356,7 +363,44 @@ namespace Djent
             e.Handled = true;
         }
 
+        private void AdonisWindow_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    DragMove();
+                }
+                catch (Exception exception)
+                {
+                    Debug.WriteLine(exception);
+                }
+            }
+        }
 
+        #region Round Corners
+
+        private void SetWindowStyle(Corner preference)
+        {
+            IntPtr hWnd = new WindowInteropHelper(GetWindow(this)!).EnsureHandle();
+            var attribute = DwmWindowAttribute.DwnCornerPreference;
+            DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
+        }
+
+        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern long DwmSetWindowAttribute(IntPtr hwnd, DwmWindowAttribute attribute, ref Corner pvAttribute, uint cbAttribute);
+
+        public enum DwmWindowAttribute { DwnCornerPreference = 33 }
+
+        public enum Corner
+        {
+            Default = 0,
+            NoRound = 1,
+            Round = 2,
+            RoundSmall = 3
+        }
+
+        #endregion
 
 
 
