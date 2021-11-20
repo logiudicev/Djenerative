@@ -5,7 +5,7 @@
     <Setting Name="PresetName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default</Value>
     </Setting>
-    <Setting Name="BPM" Type="System.Double" Scope="User">
+    <Setting Name="BPM" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="Mode" Type="System.Int32" Scope="User">

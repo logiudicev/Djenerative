@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
-    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
+    <PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
     <PackageReference Include="Melanchall.DryWetMidi" Version="6.0.0" />
   </ItemGroup>
 

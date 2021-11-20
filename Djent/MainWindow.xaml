@@ -1,133 +1,148 @@
-﻿<mah:MetroWindow x:Class="Djent.MainWindow"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                 xmlns:local="clr-namespace:Djent"
-                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 mc:Ignorable="d"
-                 Title="Metal Generator"
-                 SizeToContent="WidthAndHeight"
-                 WindowStartupLocation="CenterScreen">
+﻿<controls:AdonisWindow x:Class="Djent.MainWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                       xmlns:local="clr-namespace:Djent"
+                       xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+                       mc:Ignorable="d"
+                       Title="Djenerative"
+                       SizeToContent="WidthAndHeight"
+                       WindowStartupLocation="CenterScreen"
+                       ResizeMode="CanMinimize">
 
     <StackPanel
         HorizontalAlignment="Left"
         Margin="6">
 
-        <Label
-            Content="Settings"
-            HorizontalContentAlignment="Center"/>
+        <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+            <StackPanel>
+                <Label
+                    Content="Key"
+                    HorizontalContentAlignment="Center"
+                    Margin="0, 0, 0, 5"/>
 
-        <DockPanel HorizontalAlignment="Center">
-            <Label
-                Content="Root Note"
-                HorizontalContentAlignment="Center"/>
+                <DockPanel HorizontalAlignment="Center">
+                    <StackPanel Margin="5, 0, 5, 0">
+                        <ComboBox
+                            Name="RootNoteComboBox"
+                            Width="70"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            VerticalAlignment="Top"
+                            Height="25"/>
 
-            <ComboBox
-                Name="RootNoteComboBox"
-                Width="70"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"/>
+                        <Label
+                            Content="Root Note"
+                            HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <StackPanel Margin="5, 0, 5, 0">
+                        <ComboBox
+                            Name="ModesComboBox"
+                            Width="130"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
 
-            <Label
-                Content="Octave"
-                HorizontalContentAlignment="Center"/>
+                        <Label
+                            Content="Scale / Mode"
+                            HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
 
-            <xctk:IntegerUpDown
-                Name="OctaveIntegerUpDown"
-                Minimum="1"
-                Maximum="3"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
+            <Separator Width="50" Background="{x:Null}"/>
 
-            <Label
-                Content="BPM"
-                HorizontalContentAlignment="Center"/>
+            <StackPanel>
+                <Label
+                    Content="Settings"
+                    HorizontalContentAlignment="Center"
+                    Margin="0, 0, 0, 5"/>
 
-            <xctk:DoubleUpDown
-                Name="BpmDoubleUpDown"
-                Minimum="4"
-                Maximum="400"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
+                <DockPanel HorizontalAlignment="Center">
+                    <local:NumericEntryControl
+                        x:Name="Octave"
+                        Label="Octave"
+                        Minimum="1"
+                        Maximum="3"
+                        HorizontalAlignment="Stretch"
+                        Width="80"
+                        Margin="5, 0, 5, 0"/>
 
-            <Label
-                Content="Notes"
-                HorizontalContentAlignment="Center"/>
+                    <local:NumericEntryControl
+                        x:Name="Bpm"
+                        Label="BPM"
+                        Minimum="1"
+                        Maximum="999"
+                        HorizontalAlignment="Stretch"
+                        Width="90"
+                        Margin="5, 0, 5, 0"/>
 
-            <xctk:IntegerUpDown
-                Name="NotesIntegerUpDown"
-                Minimum="1"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
+                    <local:NumericEntryControl
+                        x:Name="Notes"
+                        Label="Notes"
+                        Minimum="1"
+                        Maximum="9999"
+                        HorizontalAlignment="Stretch"
+                        Width="100"
+                        Margin="5, 0, 5, 0"/>
+                </DockPanel>
+            </StackPanel>
         </DockPanel>
 
         <Label
             Content="Articulation Probability"
-            HorizontalContentAlignment="Center"/>
-
-        <DockPanel HorizontalAlignment="Center">
-            <Label
-                Content="Muted"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightRhythmMuted"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="Open"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightRhythmOpen"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="Lead"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightLead"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="Gaps"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightGap"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="Harmonics"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightHarmonic"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-        </DockPanel>
-
-        <Label
-            Content="Scale / Mode"
-            HorizontalContentAlignment="Center"/>
-
-        <ComboBox
-            Name="ModesComboBox"
-            Width="130"
             HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
+            Margin="0, 0, 0, 5"/>
+
+        <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+            <local:NumericEntryControl
+                x:Name="WeightRhythmMuted"
+                Label="Rhythm Mute"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightRhythmOpen"
+                Label="Rhythm Open"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightLead"
+                Label="Lead"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightGaps"
+                Label="Gaps"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightHarmonic"
+                Label="Harmonics"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+        </DockPanel>
 
         <Grid ShowGridLines="False">
             <Grid.ColumnDefinitions>
@@ -147,226 +162,208 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Content="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="2" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="3" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="4" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="5" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="6" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Label Content="7" Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="2" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="3" Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="4" Grid.Row="0" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="5" Grid.Row="0" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="6" Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
+            <Label Content="7" Grid.Row="0" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 0, 0, 5"/>
             <Label Content="Scale Builder" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <Label Content="Probability Rhythm" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <Label Content="Probability Lead" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval1"
+            <local:NumericEntryControl
+                x:Name="Interval1"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="1"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval2"
+            <local:NumericEntryControl
+                x:Name="Interval2"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="2"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval3"
+            <local:NumericEntryControl
+                x:Name="Interval3"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="3"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval4"
+            <local:NumericEntryControl
+                x:Name="Interval4"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="4"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval5"
+            <local:NumericEntryControl
+                x:Name="Interval5"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="5"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval6"
+            <local:NumericEntryControl
+                x:Name="Interval6"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="6"/>
 
-            <xctk:IntegerUpDown
-                Name="Interval7"
+            <local:NumericEntryControl
+                x:Name="Interval7"
                 Minimum="0"
                 Maximum="11"
-                Width="50"
-                ValueChanged="Interval_ValueChanged"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
                 Grid.Row="1" Grid.Column="7"/>
 
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm1"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="1"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm2"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="2"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm3"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="3"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm4"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="4"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm5"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="5"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm6"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="6"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleRhythm7"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="2" Grid.Column="7"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead1"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="1"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead2"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="2"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead3"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="3"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead4"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="4"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead5"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="5"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead6"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="6"/>
+
+            <local:NumericEntryControl
+                x:Name="WeightScaleLead7"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"
+                Grid.Row="3" Grid.Column="7"/>
+
+
         </Grid>
-
-        <Label
-            Content="Rhythm Scale Degree Probability"
-            HorizontalContentAlignment="Center"/>
-
-        <DockPanel HorizontalAlignment="Center">
-            <Label
-                Content="1"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm1"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="2"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm2"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="3"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm3"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="4"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm4"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="5"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm5"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="6"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm6"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="7"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleRhythm7"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-        </DockPanel>
-
-        <Label
-            Content="Lead Scale Degree Probability"
-            HorizontalContentAlignment="Center"/>
-
-        <DockPanel HorizontalAlignment="Center">
-            <Label
-                Content="1"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead1"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="2"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead2"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="3"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead3"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="4"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead4"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="5"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead5"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="6"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead6"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-
-            <Label
-                Content="7"
-                HorizontalContentAlignment="Center"/>
-
-            <xctk:IntegerUpDown
-                Name="WeightScaleLead7"
-                Minimum="0"
-                HorizontalAlignment="Stretch"
-                Width="50"/>
-        </DockPanel>
 
         <DockPanel Margin="0, 8, 0, 0" HorizontalAlignment="Center">
             <Button
@@ -374,22 +371,25 @@
                 Content="Save"
                 Width="60"
                 Margin="0, 0, 10, 0"
-                Click="SaveButton_Click"/>
+                Click="SaveButton_Click"
+                Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
 
             <Button
                 Name="LoadButton"
                 Content="Load"
                 Width="60"
                 Margin="10, 0, 0, 0"
-                Click="LoadButton_Click"/>
+                Click="LoadButton_Click"
+                Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
         </DockPanel>
 
         <Button
             Name="GenerateButton"
             Content="Generate"
-            Width="60"
+            Width="80"
             Click="GenerateButton_Click"
-            Margin="0, 8, 0, 0"/>
+            Margin="0, 8, 0, 0"
+            Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
 
     </StackPanel>
-</mah:MetroWindow>
+</controls:AdonisWindow>

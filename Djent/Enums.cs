@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Melanchall.DryWetMidi.MusicTheory;
-
-namespace Djent;
+﻿namespace Djent;
 
 public static class Enums
 {

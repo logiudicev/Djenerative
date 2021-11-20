@@ -38,9 +38,9 @@ namespace Djent.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("120")]
-        public double BPM {
+        public int BPM {
             get {
-                return ((double)(this["BPM"]));
+                return ((int)(this["BPM"]));
             }
             set {
                 this["BPM"] = value;

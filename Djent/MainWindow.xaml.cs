@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using MahApps.Metro.Controls;
+using System.Windows.Controls;
+using AdonisUI.Controls;
+using Djent.Properties;
 using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Composing;
 using Melanchall.DryWetMidi.Core;
@@ -16,7 +18,7 @@ namespace Djent
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : AdonisWindow
     {
         public MainWindow()
         {
@@ -30,74 +32,74 @@ namespace Djent
 
         public void GetSettings()
         {
-            BpmDoubleUpDown.Value = Properties.Preset.Default.BPM;
-            ModesComboBox.SelectedIndex = Properties.Preset.Default.Mode;
-            RootNoteComboBox.SelectedIndex = Properties.Preset.Default.Root;
-            OctaveIntegerUpDown.Value = Properties.Preset.Default.Octave;
-            NotesIntegerUpDown.Value = Properties.Preset.Default.Notes;
-            WeightRhythmMuted.Value = Properties.Preset.Default.WeightRhythmMuted;
-            WeightRhythmOpen.Value = Properties.Preset.Default.WeightRhythmOpen;
-            WeightLead.Value = Properties.Preset.Default.WeightLead;
-            WeightGap.Value = Properties.Preset.Default.WeightGap;
-            WeightHarmonic.Value = Properties.Preset.Default.WeightHarmonic;
-            WeightScaleRhythm1.Value = Properties.Preset.Default.WeightRhythm1;
-            WeightScaleRhythm2.Value = Properties.Preset.Default.WeightRhythm2;
-            WeightScaleRhythm3.Value = Properties.Preset.Default.WeightRhythm3;
-            WeightScaleRhythm4.Value = Properties.Preset.Default.WeightRhythm4;
-            WeightScaleRhythm5.Value = Properties.Preset.Default.WeightRhythm5;
-            WeightScaleRhythm6.Value = Properties.Preset.Default.WeightRhythm6;
-            WeightScaleRhythm7.Value = Properties.Preset.Default.WeightRhythm7;
-            WeightScaleLead1.Value = Properties.Preset.Default.WeightLead1;
-            WeightScaleLead2.Value = Properties.Preset.Default.WeightLead2;
-            WeightScaleLead3.Value = Properties.Preset.Default.WeightLead3;
-            WeightScaleLead4.Value = Properties.Preset.Default.WeightLead4;
-            WeightScaleLead5.Value = Properties.Preset.Default.WeightLead5;
-            WeightScaleLead6.Value = Properties.Preset.Default.WeightLead6;
-            WeightScaleLead7.Value = Properties.Preset.Default.WeightLead7;
-            Interval1.Value = Properties.Preset.Default.Interval1;
-            Interval2.Value = Properties.Preset.Default.Interval2;
-            Interval3.Value = Properties.Preset.Default.Interval3;
-            Interval4.Value = Properties.Preset.Default.Interval4;
-            Interval5.Value = Properties.Preset.Default.Interval5;
-            Interval6.Value = Properties.Preset.Default.Interval6;
-            Interval7.Value = Properties.Preset.Default.Interval7;
+            Bpm.Value = Preset.Default.BPM;
+            ModesComboBox.SelectedIndex = Preset.Default.Mode;
+            RootNoteComboBox.SelectedIndex = Preset.Default.Root;
+            Octave.Value = Preset.Default.Octave;
+            Notes.Value = Preset.Default.Notes;
+            WeightRhythmMuted.Value = Preset.Default.WeightRhythmMuted;
+            WeightRhythmOpen.Value = Preset.Default.WeightRhythmOpen;
+            WeightLead.Value = Preset.Default.WeightLead;
+            WeightGaps.Value = Preset.Default.WeightGap;
+            WeightHarmonic.Value = Preset.Default.WeightHarmonic;
+            WeightScaleRhythm1.Value = Preset.Default.WeightRhythm1;
+            WeightScaleRhythm2.Value = Preset.Default.WeightRhythm2;
+            WeightScaleRhythm3.Value = Preset.Default.WeightRhythm3;
+            WeightScaleRhythm4.Value = Preset.Default.WeightRhythm4;
+            WeightScaleRhythm5.Value = Preset.Default.WeightRhythm5;
+            WeightScaleRhythm6.Value = Preset.Default.WeightRhythm6;
+            WeightScaleRhythm7.Value = Preset.Default.WeightRhythm7;
+            WeightScaleLead1.Value = Preset.Default.WeightLead1;
+            WeightScaleLead2.Value = Preset.Default.WeightLead2;
+            WeightScaleLead3.Value = Preset.Default.WeightLead3;
+            WeightScaleLead4.Value = Preset.Default.WeightLead4;
+            WeightScaleLead5.Value = Preset.Default.WeightLead5;
+            WeightScaleLead6.Value = Preset.Default.WeightLead6;
+            WeightScaleLead7.Value = Preset.Default.WeightLead7;
+            Interval1.Value = Preset.Default.Interval1;
+            Interval2.Value = Preset.Default.Interval2;
+            Interval3.Value = Preset.Default.Interval3;
+            Interval4.Value = Preset.Default.Interval4;
+            Interval5.Value = Preset.Default.Interval5;
+            Interval6.Value = Preset.Default.Interval6;
+            Interval7.Value = Preset.Default.Interval7;
         }
 
         public void SaveSettings()
         {
-            Properties.Preset.Default.BPM = (double) BpmDoubleUpDown.Value!;
-            Properties.Preset.Default.Mode = ModesComboBox.SelectedIndex;
-            Properties.Preset.Default.Root = RootNoteComboBox.SelectedIndex;
-            Properties.Preset.Default.Octave = (int) OctaveIntegerUpDown.Value!;
-            Properties.Preset.Default.Notes = (int) NotesIntegerUpDown.Value!;
-            Properties.Preset.Default.WeightRhythmMuted = (int) WeightRhythmMuted.Value!;
-            Properties.Preset.Default.WeightRhythmOpen = (int) WeightRhythmOpen.Value!;
-            Properties.Preset.Default.WeightLead = (int) WeightLead.Value!;
-            Properties.Preset.Default.WeightGap = (int) WeightGap.Value!;
-            Properties.Preset.Default.WeightHarmonic = (int) WeightHarmonic.Value!;
-            Properties.Preset.Default.WeightRhythm1 = (int) WeightScaleRhythm1.Value!;
-            Properties.Preset.Default.WeightRhythm2 = (int) WeightScaleRhythm2.Value!;
-            Properties.Preset.Default.WeightRhythm3 = (int) WeightScaleRhythm3.Value!;
-            Properties.Preset.Default.WeightRhythm4 = (int) WeightScaleRhythm4.Value!;
-            Properties.Preset.Default.WeightRhythm5 = (int) WeightScaleRhythm5.Value!;
-            Properties.Preset.Default.WeightRhythm6 = (int) WeightScaleRhythm6.Value!;
-            Properties.Preset.Default.WeightRhythm7 = (int) WeightScaleRhythm7.Value!;
-            Properties.Preset.Default.WeightLead1 = (int) WeightScaleLead1.Value!;
-            Properties.Preset.Default.WeightLead2 = (int) WeightScaleLead2.Value!;
-            Properties.Preset.Default.WeightLead3 = (int) WeightScaleLead3.Value!;
-            Properties.Preset.Default.WeightLead4 = (int) WeightScaleLead4.Value!;
-            Properties.Preset.Default.WeightLead5 = (int) WeightScaleLead5.Value!;
-            Properties.Preset.Default.WeightLead6 = (int) WeightScaleLead6.Value!;
-            Properties.Preset.Default.WeightLead7 = (int) WeightScaleLead7.Value!;
-            Properties.Preset.Default.Interval1 = (int) Interval1.Value!;
-            Properties.Preset.Default.Interval2 = (int) Interval2.Value!;
-            Properties.Preset.Default.Interval3 = (int) Interval3.Value!;
-            Properties.Preset.Default.Interval4 = (int) Interval4.Value!;
-            Properties.Preset.Default.Interval5 = (int) Interval5.Value!;
-            Properties.Preset.Default.Interval6 = (int) Interval6.Value!;
-            Properties.Preset.Default.Interval7 = (int) Interval7.Value!;
+            Preset.Default.BPM = Bpm.Value;
+            Preset.Default.Mode = ModesComboBox.SelectedIndex;
+            Preset.Default.Root = RootNoteComboBox.SelectedIndex;
+            Preset.Default.Octave = Octave.Value;
+            Preset.Default.Notes = Notes.Value;
+            Preset.Default.WeightRhythmMuted = WeightRhythmMuted.Value;
+            Preset.Default.WeightRhythmOpen = WeightRhythmOpen.Value;
+            Preset.Default.WeightLead = WeightLead.Value;
+            Preset.Default.WeightGap = WeightGaps.Value;
+            Preset.Default.WeightHarmonic = WeightHarmonic.Value;
+            Preset.Default.WeightRhythm1 = WeightScaleRhythm1.Value;
+            Preset.Default.WeightRhythm2 = WeightScaleRhythm2.Value;
+            Preset.Default.WeightRhythm3 = WeightScaleRhythm3.Value;
+            Preset.Default.WeightRhythm4 = WeightScaleRhythm4.Value;
+            Preset.Default.WeightRhythm5 = WeightScaleRhythm5.Value;
+            Preset.Default.WeightRhythm6 = WeightScaleRhythm6.Value;
+            Preset.Default.WeightRhythm7 = WeightScaleRhythm7.Value;
+            Preset.Default.WeightLead1 = WeightScaleLead1.Value;
+            Preset.Default.WeightLead2 = WeightScaleLead2.Value;
+            Preset.Default.WeightLead3 = WeightScaleLead3.Value;
+            Preset.Default.WeightLead4 = WeightScaleLead4.Value;
+            Preset.Default.WeightLead5 = WeightScaleLead5.Value;
+            Preset.Default.WeightLead6 = WeightScaleLead6.Value;
+            Preset.Default.WeightLead7 = WeightScaleLead7.Value;
+            Preset.Default.Interval1 = Interval1.Value;
+            Preset.Default.Interval2 = Interval2.Value;
+            Preset.Default.Interval3 = Interval3.Value;
+            Preset.Default.Interval4 = Interval4.Value;
+            Preset.Default.Interval5 = Interval5.Value;
+            Preset.Default.Interval6 = Interval6.Value;
+            Preset.Default.Interval7 = Interval7.Value;
 
-            Properties.Preset.Default.Save();
+            Preset.Default.Save();
         }
 
         public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
@@ -194,9 +196,9 @@ namespace Djent
         {
             var mode = (Enums.Modes) ModesComboBox.SelectedItem;
             var rootNote = (NoteName) RootNoteComboBox.SelectedItem;
-            var rootOctave = (int) OctaveIntegerUpDown.Value!;
-            var bpm = (double) BpmDoubleUpDown.Value!;
-            var notes = (uint) NotesIntegerUpDown.Value!;
+            var rootOctave = Octave.Value;
+            var bpm = (double) Bpm.Value;
+            var notes = (uint) Notes.Value;
 
             if (bpm < 4) return;
             if (notes < 1) return;
@@ -208,13 +210,13 @@ namespace Djent
             {
                 scale = new Scales.Intervals
                 {
-                    Interval1 = (int) Interval1.Value!,
-                    Interval2 = (int) Interval2.Value!,
-                    Interval3 = (int) Interval3.Value!,
-                    Interval4 = (int) Interval4.Value!,
-                    Interval5 = (int) Interval5.Value!,
-                    Interval6 = (int) Interval6.Value!,
-                    Interval7 = (int) Interval7.Value!
+                    Interval1 = Interval1.Value!,
+                    Interval2 = Interval2.Value!,
+                    Interval3 = Interval3.Value!,
+                    Interval4 = Interval4.Value!,
+                    Interval5 = Interval5.Value!,
+                    Interval6 = Interval6.Value!,
+                    Interval7 = Interval7.Value!
                 };
             }
             else
@@ -233,33 +235,33 @@ namespace Djent
 
             var probArticulation = new Probability.Articulation
             {
-                RhythmMuted = (double) WeightRhythmMuted.Value!,
-                RhythmOpen = (double) WeightRhythmOpen.Value!,
-                Lead = (double) WeightLead.Value!,
-                Gap = (double) WeightGap.Value!,
-                Harmonic = (double) WeightHarmonic.Value!
+                RhythmMuted = WeightRhythmMuted.Value,
+                RhythmOpen = WeightRhythmOpen.Value,
+                Lead = WeightLead.Value,
+                Gap = WeightGaps.Value,
+                Harmonic = WeightHarmonic.Value!
             };
 
             var probScaleRhythm = new Probability.Scale
             {
-                Degree1 = (double) WeightScaleRhythm1.Value!,
-                Degree2 = (double) WeightScaleRhythm2.Value!,
-                Degree3 = (double) WeightScaleRhythm3.Value!,
-                Degree4 = (double) WeightScaleRhythm4.Value!,
-                Degree5 = (double) WeightScaleRhythm5.Value!,
-                Degree6 = (double) WeightScaleRhythm6.Value!,
-                Degree7 = (double) WeightScaleRhythm7.Value!
+                Degree1 = WeightScaleRhythm1.Value,
+                Degree2 = WeightScaleRhythm2.Value,
+                Degree3 = WeightScaleRhythm3.Value,
+                Degree4 = WeightScaleRhythm4.Value,
+                Degree5 = WeightScaleRhythm5.Value,
+                Degree6 = WeightScaleRhythm6.Value,
+                Degree7 = WeightScaleRhythm7.Value
             };
 
             var probScaleLead = new Probability.Scale
             {
-                Degree1 = (double) WeightScaleLead1.Value!,
-                Degree2 = (double) WeightScaleLead2.Value!,
-                Degree3 = (double) WeightScaleLead3.Value!,
-                Degree4 = (double) WeightScaleLead4.Value!,
-                Degree5 = (double) WeightScaleLead5.Value!,
-                Degree6 = (double) WeightScaleLead6.Value!,
-                Degree7 = (double) WeightScaleLead7.Value!
+                Degree1 = WeightScaleLead1.Value,
+                Degree2 = WeightScaleLead2.Value,
+                Degree3 = WeightScaleLead3.Value,
+                Degree4 = WeightScaleLead4.Value,
+                Degree5 = WeightScaleLead5.Value,
+                Degree6 = WeightScaleLead6.Value,
+                Degree7 = WeightScaleLead7.Value
             };
 
             await CreateMidiFile(
@@ -288,7 +290,7 @@ namespace Djent
             e.Handled = true;
         }
 
-        private void ModesComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ModesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch ((Enums.Modes) ModesComboBox.SelectedIndex)
             {
