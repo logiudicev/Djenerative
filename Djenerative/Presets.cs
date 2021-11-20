@@ -12,7 +12,7 @@ namespace Djenerative
         public Preset LoadedPreset { get; set; } = new();
         private const string PresetDirectoryName = "Presets";
         private const string PresetExt = ".djp";
-        private const string PresetDefault = "Default";
+        public static string PresetDefault => "Default";
         private readonly string _presetDirectoryFullPath = Path.Combine(Environment.CurrentDirectory, PresetDirectoryName);
         public List<string> PresetList = new();
         private ComboBox ComboBox { get; }
@@ -48,6 +48,8 @@ namespace Djenerative
 
         public async Task<Preset> LoadPreset(string name)
         {
+            // ReSharper disable once ConstantNullCoalescingCondition
+            name ??= PresetDefault;
             string fullPath = $"{Path.Combine(_presetDirectoryFullPath, name)}{PresetExt}";
             await using FileStream stream = File.OpenRead(fullPath);
             LoadedPreset = await JsonSerializer.DeserializeAsync<Preset>(stream) ?? new Preset();
@@ -62,6 +64,13 @@ namespace Djenerative
             await stream.DisposeAsync();
 
             EnumeratePresets();
+        }
+
+        public Task DeletePreset(string name)
+        {
+            File.Delete(Path.Combine(_presetDirectoryFullPath, $"{name}{PresetExt}"));
+            EnumeratePresets();
+            return Task.CompletedTask;
         }
 
         public class Preset

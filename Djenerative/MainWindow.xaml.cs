@@ -293,7 +293,7 @@ namespace Djenerative
                 probScaleLead);
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             _ = new InputBox(this, "Save Preset");
         }
@@ -307,6 +307,18 @@ namespace Djenerative
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
             GetPreset(Preset.LoadedPreset);
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string current = PresetComboBox.Text;
+            if (current == Presets.PresetDefault) return;
+            _ = DeletePreset(current);
+        }
+
+        public async Task DeletePreset(string name)
+        {
+            await Preset.DeletePreset(name);
         }
 
         private void Interval_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -408,7 +420,7 @@ namespace Djenerative
 
         #region Round Corners
 
-        private void UpdateLastPreset(string name)
+        private static void UpdateLastPreset(string name)
         {
             Properties.Preset.Default.LastPreset = name;
             Properties.Preset.Default.Save();

@@ -60,6 +60,14 @@
                     Margin="10, 8, 10, 0"
                     Click="SaveButton_Click"
                     Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+
+                <Button
+                    Name="DeleteButton"
+                    Content="Delete"
+                    Width="60"
+                    Margin="10, 8, 10, 0"
+                    Click="DeleteButton_Click"
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
             </DockPanel>
         </StackPanel>
 
