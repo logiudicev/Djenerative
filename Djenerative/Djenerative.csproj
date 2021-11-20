@@ -13,6 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background.jpg" />
+    <None Remove="background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
 
@@ -23,6 +28,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\drywetmidi\DryWetMidi\Melanchall.DryWetMidi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="background.jpg" />
   </ItemGroup>
 
   <ItemGroup>

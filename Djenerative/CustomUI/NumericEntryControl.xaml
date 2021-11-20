@@ -13,12 +13,14 @@
                     DockPanel.Dock="Left"
                     Content="-" 
                     Width="{Binding ActualHeight, ElementName=buttonDecrement, Mode=Default}" 
-                    Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"/>
+                    Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"
+                    Focusable="False"/>
             <Button x:Name="buttonIncrement" 
                     DockPanel.Dock="Right" 
                     Content="+" 
                     Width="{Binding ActualHeight, ElementName=buttonDecrement, Mode=Default}" 
-                    Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"/>
+                    Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"
+                    Focusable="False"/>
             <TextBox 
                 x:Name="_textbox" 
                 Margin="2,0"

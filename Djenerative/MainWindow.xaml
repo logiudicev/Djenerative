@@ -12,10 +12,16 @@
                        SizeToContent="WidthAndHeight"
                        WindowStartupLocation="CenterScreen"
                        ResizeMode="CanMinimize"
-                       Background="#2a2b34"
+                       Background="{DynamicResource BackgroundImage}"
                        TitleVisibility="Hidden"
                        PlaceTitleBarOverContent="True"
-                       MouseDown="AdonisWindow_MouseDown">
+                       MouseDown="AdonisWindow_MouseDown"
+                       PreviewKeyDown="AdonisWindow_PreviewKeyDown">
+
+    <Window.Resources>
+        <ImageSource x:Key="imgSource">/Djenerative;component/background.jpg</ImageSource>
+        <ImageBrush x:Key="BackgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.1" Stretch="UniformToFill"></ImageBrush>
+    </Window.Resources>
 
     <StackPanel
         HorizontalAlignment="Left"
@@ -71,84 +77,43 @@
             </DockPanel>
         </StackPanel>
 
-        <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
-            <StackPanel>
-                <Label
-                    Content="Key"
-                    FontSize="15"
-                    FontWeight="ExtraBlack"
-                    HorizontalContentAlignment="Center"
-                    Margin="0, 0, 0, 5"/>
+        <StackPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+            <Label
+                Content="Settings"
+                HorizontalContentAlignment="Center"
+                FontSize="15"
+                FontWeight="ExtraBlack"
+                Margin="0, 0, 0, 5"/>
 
-                <DockPanel HorizontalAlignment="Center">
-                    <StackPanel Margin="5, 0, 5, 0">
-                        <ComboBox
-                            Name="RootNoteComboBox"
-                            Width="70"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            VerticalAlignment="Top"
-                            Height="25"/>
+            <DockPanel HorizontalAlignment="Center">
+                <customUi:NumericEntryControl
+                    x:Name="Octave"
+                    Label="Octave"
+                    Minimum="1"
+                    Maximum="3"
+                    HorizontalAlignment="Stretch"
+                    Width="80"
+                    Margin="5, 0, 5, 0"/>
 
-                        <Label
-                            Content="Root Note"
-                            HorizontalContentAlignment="Center"/>
-                    </StackPanel>
-                    
-                    <StackPanel Margin="5, 0, 5, 0">
-                        <ComboBox
-                            Name="ModesComboBox"
-                            Width="130"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
+                <customUi:NumericEntryControl
+                    x:Name="Bpm"
+                    Label="BPM"
+                    Minimum="1"
+                    Maximum="999"
+                    HorizontalAlignment="Stretch"
+                    Width="90"
+                    Margin="5, 0, 5, 0"/>
 
-                        <Label
-                            Content="Scale / Mode"
-                            HorizontalContentAlignment="Center"/>
-                    </StackPanel>
-                </DockPanel>
-            </StackPanel>
-
-            <Separator Width="50" Background="{x:Null}"/>
-
-            <StackPanel>
-                <Label
-                    Content="Settings"
-                    HorizontalContentAlignment="Center"
-                    FontSize="15"
-                    FontWeight="ExtraBlack"
-                    Margin="0, 0, 0, 5"/>
-
-                <DockPanel HorizontalAlignment="Center">
-                    <customUi:NumericEntryControl
-                        x:Name="Octave"
-                        Label="Octave"
-                        Minimum="1"
-                        Maximum="3"
-                        HorizontalAlignment="Stretch"
-                        Width="80"
-                        Margin="5, 0, 5, 0"/>
-
-                    <customUi:NumericEntryControl
-                        x:Name="Bpm"
-                        Label="BPM"
-                        Minimum="1"
-                        Maximum="999"
-                        HorizontalAlignment="Stretch"
-                        Width="90"
-                        Margin="5, 0, 5, 0"/>
-
-                    <customUi:NumericEntryControl
-                        x:Name="Notes"
-                        Label="Notes"
-                        Minimum="1"
-                        Maximum="9999"
-                        HorizontalAlignment="Stretch"
-                        Width="100"
-                        Margin="5, 0, 5, 0"/>
-                </DockPanel>
-            </StackPanel>
-        </DockPanel>
+                <customUi:NumericEntryControl
+                    x:Name="Notes"
+                    Label="Notes"
+                    Minimum="1"
+                    Maximum="9999"
+                    HorizontalAlignment="Stretch"
+                    Width="100"
+                    Margin="5, 0, 5, 0"/>
+            </DockPanel>
+        </StackPanel>
 
         <Label
             Content="Articulation Probability"
@@ -204,6 +169,43 @@
                 Margin="5, 0, 5, 0"/>
         </DockPanel>
 
+        <StackPanel Margin="0, 0, 0, 5">
+            <Label
+                Content="Key"
+                FontSize="15"
+                FontWeight="ExtraBlack"
+                HorizontalContentAlignment="Center"
+                Margin="0, 0, 0, 5"/>
+
+            <DockPanel HorizontalAlignment="Center">
+                <StackPanel Margin="5, 0, 5, 0">
+                    <ComboBox
+                        Name="RootNoteComboBox"
+                        Width="70"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        VerticalAlignment="Top"
+                        Height="25"/>
+
+                    <Label
+                        Content="Root Note"
+                        HorizontalContentAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Margin="5, 0, 5, 0">
+                    <ComboBox
+                        Name="ModesComboBox"
+                        Width="130"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
+
+                    <Label
+                        Content="Scale / Mode"
+                        HorizontalContentAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
+        </StackPanel>
+
         <Grid ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -240,7 +242,8 @@
                 HorizontalAlignment="Stretch"
                 Width="80"
                 Margin="5, 0, 5, 0"
-                Grid.Row="1" Grid.Column="1"/>
+                Grid.Row="1" Grid.Column="1"
+                PreviewMouseDown="Interval_PreviewMouseDown"/>
 
             <customUi:NumericEntryControl
                 x:Name="Interval2"

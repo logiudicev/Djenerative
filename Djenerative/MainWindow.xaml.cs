@@ -83,6 +83,8 @@ namespace Djenerative
 
         public async Task SavePreset(string name)
         {
+            if (name == Presets.PresetDefault) return;
+
             Presets.Preset preset = new()
             {
                 Bpm = Bpm.Value,
@@ -321,12 +323,6 @@ namespace Djenerative
             await Preset.DeletePreset(name);
         }
 
-        private void Interval_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            ModesComboBox.SelectedIndex = (int) Enums.Modes.Custom;
-            e.Handled = true;
-        }
-
         private void ModesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch ((Enums.Modes) ModesComboBox.SelectedIndex)
@@ -418,12 +414,31 @@ namespace Djenerative
             e.Handled = true;
         }
 
+        private void Interval_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            IntervalChanged();
+            e.Handled = true;
+        }
+
+        private void IntervalChanged()
+        {
+            ModesComboBox.SelectedIndex = (int) Enums.Modes.Custom;
+        }
+
         #region Round Corners
 
         private static void UpdateLastPreset(string name)
         {
             Properties.Preset.Default.LastPreset = name;
             Properties.Preset.Default.Save();
+        }
+
+        private void AdonisWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                e.Handled = true;
+            }
         }
 
         private void SetWindowStyle(Corner preference)
