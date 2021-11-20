@@ -7,7 +7,7 @@ using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using Note = Melanchall.DryWetMidi.MusicTheory.Note;
 
-namespace Djent;
+namespace Djenerative;
 
 public class Patterns
 {
@@ -97,7 +97,7 @@ public class Patterns
     {
         int seed = 0;
 
-        Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
+        Weighted.ChanceExecutor chanceExecutor = new();
 
         if (scale.Degree1 > 0)
         {
@@ -174,7 +174,6 @@ public class Patterns
         {
             int octave = RootNote.Octave;
             OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
-            bool skipZero = RootNote.Octave != octave;
             IntervalCache = GetInterval(ProbScaleRhythm);
         }
 
@@ -198,7 +197,7 @@ public class Patterns
             .Build();
     }
 
-    public Pattern Drums()
+    public static Pattern Drums()
     {
         /*.Chord(new[]
         {
@@ -259,7 +258,7 @@ public class Patterns
             .Build();
     }
 
-    public Pattern Gap()
+    public static Pattern Gap()
     {
         return new PatternBuilder()
             .StepForward(MusicalTimeSpan.Sixteenth)

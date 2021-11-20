@@ -1,4 +1,4 @@
-﻿namespace Djent
+﻿namespace Djenerative
 {
     public class Scales
     {

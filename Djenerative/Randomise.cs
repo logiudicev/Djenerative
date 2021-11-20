@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Djent
+namespace Djenerative
 {
     internal class Randomise
     {

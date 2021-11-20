@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Djent;
+namespace Djenerative;
 
 internal class Weighted
 {

@@ -1,7 +1,7 @@
-﻿<Application x:Class="Djent.App"
+﻿<Application x:Class="Djenerative.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Djent"
+             xmlns:local="clr-namespace:Djenerative"
              xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
              StartupUri="MainWindow.xaml">
 

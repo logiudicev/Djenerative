@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Djent
+namespace Djenerative
 {
     /// <summary>
     /// Interaction logic for App.xaml

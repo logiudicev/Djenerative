@@ -1,4 +1,4 @@
-﻿namespace Djent;
+﻿namespace Djenerative;
 
 public static class Enums
 {

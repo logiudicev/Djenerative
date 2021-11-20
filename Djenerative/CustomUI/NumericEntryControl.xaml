@@ -1,10 +1,12 @@
-﻿<UserControl x:Class="Djent.NumericEntryControl"
+﻿<UserControl x:Class="Djenerative.CustomUI.NumericEntryControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             xmlns:my="clr-namespace:Djent" Width="auto" Height="auto">
+             xmlns:my="clr-namespace:Djenerative"
+             xmlns:customUi="clr-namespace:Djenerative.CustomUI"
+             Width="auto" Height="auto">
     <StackPanel>
         <DockPanel d:LayoutOverrides="Width">
             <Button x:Name="buttonDecrement" 
@@ -24,7 +26,7 @@
                     Mode=TwoWay, 
                     RelativeSource={RelativeSource FindAncestor,
                         AncestorLevel=1, 
-                        AncestorType={x:Type my:NumericEntryControl}}, 
+                        AncestorType={x:Type customUi:NumericEntryControl}}, 
                     UpdateSourceTrigger=PropertyChanged}" 
                 HorizontalAlignment="Stretch" 
                 HorizontalContentAlignment="Center" 
@@ -34,7 +36,7 @@
                     Mode=Default, 
                     RelativeSource={RelativeSource FindAncestor,
                         AncestorLevel=1, 
-                        AncestorType={x:Type my:NumericEntryControl}}, 
+                        AncestorType={x:Type customUi:NumericEntryControl}}, 
                     UpdateSourceTrigger=Default}"/>
     </StackPanel>
 </UserControl>

@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace Djent
+namespace Djenerative.CustomUI
 {
     /// <summary>
     /// Interaction logic for NumericEntryControl.xaml
