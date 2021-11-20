@@ -7,11 +7,12 @@
     <UseWPF>true</UseWPF>
     <Company>Wilding Studios</Company>
     <Authors>Matthew Wilding</Authors>
-	<PublishSingleFile>true</PublishSingleFile>
+    <AssemblyName>Djenerative</AssemblyName>
+	<!--<PublishSingleFile>true</PublishSingleFile>
 	<SelfContained>false</SelfContained>
 	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	<PublishReadyToRun>true</PublishReadyToRun>
-	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>-->
   </PropertyGroup>
 
   <ItemGroup>

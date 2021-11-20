@@ -28,7 +28,7 @@
                     UpdateSourceTrigger=PropertyChanged}" 
                 HorizontalAlignment="Stretch" 
                 HorizontalContentAlignment="Center" 
-                VerticalContentAlignment="Center" TextChanged="_textbox_TextChanged" />
+                VerticalContentAlignment="Center" TextChanged="Textbox_TextChanged" />
         </DockPanel>
         <Label x:Name="_label" HorizontalAlignment="Center" Content="{Binding Label, 
                     Mode=Default, 

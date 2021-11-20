@@ -14,7 +14,8 @@
                        ResizeMode="CanMinimize"
                        Background="#2a2b34"
                        TitleVisibility="Hidden"
-                       PlaceTitleBarOverContent="True" MouseDown="AdonisWindow_MouseDown">
+                       PlaceTitleBarOverContent="True"
+                       MouseDown="AdonisWindow_MouseDown">
 
     <StackPanel
         HorizontalAlignment="Left"

@@ -17,6 +17,8 @@ using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.MusicTheory;
 using Note = Melanchall.DryWetMidi.MusicTheory.Note;
 
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+
 namespace Djent
 {
     /// <summary>
@@ -118,16 +120,16 @@ namespace Djent
             //midiFile.ReplaceTempoMap(tempoMap);
             //midiFile.Chunks.Add(new TrackChunk());
             
-            List<Pattern?> guitar1 = new List<Pattern?>();
-            List<Pattern?> guitar2 = new List<Pattern?>();
-            List<Pattern?> bass = new List<Pattern?>();
-            List<Pattern?> drums = new List<Pattern?>();
+            List<Pattern?> guitar1 = new();
+            List<Pattern?> guitar2 = new();
+            List<Pattern?> bass = new();
+            List<Pattern?> drums = new();
 
-            Patterns pattern = new Patterns(scale, rootNote, probScaleRhythm, probScaleLead);
+            Patterns pattern = new(scale, rootNote, probScaleRhythm, probScaleLead);
 
-            Patterns.NoteGroup group = new Patterns.NoteGroup();
+            Patterns.NoteGroup group = new();
 
-            Weighted.ChanceExecutor chanceExecutor = new Weighted.ChanceExecutor();
+            Weighted.ChanceExecutor chanceExecutor = new();
 
             if (probArticulation.RhythmMuted != 0 && probScaleRhythm.Enabled)
             {

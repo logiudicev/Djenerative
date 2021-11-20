@@ -37,9 +37,9 @@ namespace Djent
             new PropertyMetadata(5));
 
         private int _previousValue;
-        private DispatcherTimer _timer = new();
-        private static int _delayRate = SystemParameters.KeyboardDelay;
-        private static int _repeatSpeed = Math.Max(1, SystemParameters.KeyboardSpeed);
+        private readonly DispatcherTimer _timer = new();
+        private static readonly int _delayRate = SystemParameters.KeyboardDelay;
+        private static readonly int _repeatSpeed = Math.Max(1, SystemParameters.KeyboardSpeed);
 
         private bool _isIncrementing;
 
@@ -83,21 +83,21 @@ namespace Djent
         {
             InitializeComponent();
 
-            _textbox.PreviewTextInput += _textbox_PreviewTextInput;
-            _textbox.PreviewKeyDown += _textbox_PreviewKeyDown;
-            _textbox.GotFocus += _textbox_GotFocus;
-            _textbox.LostFocus += _textbox_LostFocus;
+            _textbox.PreviewTextInput += Textbox_PreviewTextInput;
+            _textbox.PreviewKeyDown += Textbox_PreviewKeyDown;
+            _textbox.GotFocus += Textbox_GotFocus;
+            _textbox.LostFocus += Textbox_LostFocus;
 
-            buttonIncrement.PreviewMouseLeftButtonDown += buttonIncrement_PreviewMouseLeftButtonDown;
-            buttonIncrement.PreviewMouseLeftButtonUp += buttonIncrement_PreviewMouseLeftButtonUp;
+            buttonIncrement.PreviewMouseLeftButtonDown += ButtonIncrement_PreviewMouseLeftButtonDown;
+            buttonIncrement.PreviewMouseLeftButtonUp += ButtonIncrement_PreviewMouseLeftButtonUp;
 
-            buttonDecrement.PreviewMouseLeftButtonDown += buttonDecrement_PreviewMouseLeftButtonDown;
-            buttonDecrement.PreviewMouseLeftButtonUp += buttonDecrement_PreviewMouseLeftButtonUp;
+            buttonDecrement.PreviewMouseLeftButtonDown += ButtonDecrement_PreviewMouseLeftButtonDown;
+            buttonDecrement.PreviewMouseLeftButtonUp += ButtonDecrement_PreviewMouseLeftButtonUp;
 
-            _timer.Tick += _timer_Tick;
+            _timer.Tick += TimerTick;
         }
 
-        void buttonIncrement_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ButtonIncrement_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             buttonIncrement.CaptureMouse();
             _timer.Interval = TimeSpan.FromMilliseconds(_delayRate * 250);
@@ -106,14 +106,14 @@ namespace Djent
             _isIncrementing = true;
         }
 
-        void buttonIncrement_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ButtonIncrement_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _timer.Stop();
             buttonIncrement.ReleaseMouseCapture();
             IncrementValue();
         }
 
-        void buttonDecrement_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ButtonDecrement_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             buttonDecrement.CaptureMouse();
             _timer.Interval = TimeSpan.FromMilliseconds(_delayRate * 250);
@@ -122,14 +122,14 @@ namespace Djent
             _isIncrementing = false;
         }
 
-        void buttonDecrement_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ButtonDecrement_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _timer.Stop();
             buttonDecrement.ReleaseMouseCapture();
             DecrementValue();
         }
 
-        void _timer_Tick(object? sender, EventArgs e)
+        private void TimerTick(object? sender, EventArgs e)
         {
             if (_isIncrementing)
             {
@@ -143,15 +143,14 @@ namespace Djent
 
         }
 
-        void _textbox_GotFocus(object sender, RoutedEventArgs e)
+        private void Textbox_GotFocus(object sender, RoutedEventArgs e)
         {
             _previousValue = Value;
         }
 
-        void _textbox_LostFocus(object sender, RoutedEventArgs e)
+        private void Textbox_LostFocus(object sender, RoutedEventArgs e)
         {
-            int newValue = 0;
-            if (int.TryParse(_textbox.Text, out newValue))
+            if (int.TryParse(_textbox.Text, out int newValue))
             {
                 if (newValue > Maximum)
                 {
@@ -169,7 +168,7 @@ namespace Djent
             _textbox.Text = newValue.ToString();
         }
 
-        void _textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void Textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (!IsNumericInput(e.Text))
             {
@@ -179,12 +178,12 @@ namespace Djent
             ButtonStatus();
         }
 
-        private bool IsNumericInput(string text)
+        private static bool IsNumericInput(string text)
         {
             return text.All(char.IsDigit);
         }
 
-        void _textbox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void Textbox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
@@ -235,7 +234,7 @@ namespace Djent
             }
         }
 
-        private void _textbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (Value > Maximum || Value < Minimum)
             {
