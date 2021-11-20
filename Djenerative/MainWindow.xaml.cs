@@ -194,10 +194,19 @@ namespace Djenerative
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, bass, Enums.GmInst.ElectricBassPick));
             midiFile.Chunks.Add(ChunkBuilder(tempoMap, drums, Enums.GmInst.ElectricBassPick));
 
-            File.Delete(@"C:\Users\anon\Desktop\test.mid");
-            midiFile.Write(@"C:\Users\anon\Desktop\test.mid");
+            var midiPath = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "MIDI"));
+            var filePath = Path.Combine(midiPath.FullName, file);
+            midiFile.Write(filePath, true);
+            OpenDirectory(filePath);
 
             return Task.CompletedTask;
+        }
+
+        private static void OpenDirectory(string filePath)
+        {
+            if (!File.Exists(filePath)) return;
+            string argument = "/select, \"" + filePath + "\"";
+            Process.Start("explorer.exe", argument);
         }
 
         private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern?> patterns, Enums.GmInst instrument)

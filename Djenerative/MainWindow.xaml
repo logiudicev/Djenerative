@@ -171,7 +171,7 @@
                 Margin="5, 0, 5, 0"/>
         </DockPanel>
 
-        <StackPanel Margin="0, 0, 0, 5">
+        <StackPanel Margin="0, 0, 0, 20">
             <Label
                 Content="Key"
                 FontSize="15"
