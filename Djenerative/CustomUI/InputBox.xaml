@@ -11,9 +11,9 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="#2a2b34"
-
         MouseDown="AdonisWindow_MouseDown"
-        WindowStyle="ToolWindow">
+        WindowStyle="ToolWindow"
+        Topmost="True">
 
     <StackPanel HorizontalAlignment="Center" Margin="10">
         <TextBox Name="InputText"

@@ -16,16 +16,18 @@
                        TitleVisibility="Hidden"
                        PlaceTitleBarOverContent="True"
                        MouseDown="AdonisWindow_MouseDown"
-                       PreviewKeyDown="AdonisWindow_PreviewKeyDown">
+                       PreviewKeyDown="AdonisWindow_PreviewKeyDown"
+                       AllowsTransparency="True"
+                       WindowStyle="None">
 
     <Window.Resources>
         <ImageSource x:Key="imgSource">/Djenerative;component/background.jpg</ImageSource>
-        <ImageBrush x:Key="BackgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.1" Stretch="UniformToFill"></ImageBrush>
+        <ImageBrush x:Key="BackgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.5" Stretch="UniformToFill"></ImageBrush>
     </Window.Resources>
 
     <StackPanel
         HorizontalAlignment="Left"
-        Margin="6">
+        Margin="20, 6, 20, 12">
 
         <Label
             Content="Djenerative"

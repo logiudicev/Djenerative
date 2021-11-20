@@ -435,10 +435,13 @@ namespace Djenerative
 
         private void AdonisWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Tab)
+            switch (e.Key)
             {
-                e.Handled = true;
+                case Key.Escape:
+                    Close();
+                    break;
             }
+            e.Handled = true;
         }
 
         private void SetWindowStyle(Corner preference)
