@@ -388,9 +388,14 @@ namespace Djenerative
                 }
             }
         }
-        private void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void PresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            string presetName = (string) PresetComboBox.SelectedItem;
+            Properties.Preset.Default.LastPreset = presetName;
+            Properties.Preset.Default.Save();
+
+            GetSettings(await Preset.LoadPreset(presetName));
+
             e.Handled = true;
         }
 

@@ -11,6 +11,7 @@ namespace Djenerative
     {
         public Preset LoadedPreset { get; set; } = new();
         private const string PresetDirectoryName = "Presets";
+        private const string PresetExt = ".djp";
         private const string PresetDefault = "Default";
         private readonly string _presetDirectoryFullPath = Path.Combine(Environment.CurrentDirectory, PresetDirectoryName);
         public List<string> PresetList = new();
@@ -31,21 +32,36 @@ namespace Djenerative
             PresetList.Add(PresetDefault);
             foreach (var file in filesPaths)
             {
-                if (file.EndsWith(".djp") && !file.Contains(PresetDefault))
+                if (file.EndsWith(PresetExt) && !file.Contains(PresetDefault))
                 {
                     PresetList.Add(Path.GetFileNameWithoutExtension(file));
                 }
             }
 
             ComboBox.ItemsSource = PresetList;
+            if (!PresetList.Contains(Properties.Preset.Default.LastPreset))
+            {
+                ComboBox.SelectedItem = PresetDefault;
+            }
+            else
+            {
+                ComboBox.SelectedItem = Properties.Preset.Default.LastPreset;
+            }
+        }
+
+        public async Task<Preset> LoadPreset(string name)
+        {
+            string fullPath = $"{Path.Combine(_presetDirectoryFullPath, name)}{PresetExt}";
+            await using FileStream stream = File.OpenRead(fullPath);
+            return await JsonSerializer.DeserializeAsync<Preset>(stream) ?? new Preset();
         }
 
         public async Task CreatePreset(Preset preset, string name)
         {
-            string fileName = Path.Combine(_presetDirectoryFullPath, $"{name}.djp");
-            await using FileStream createStream = File.Create(fileName);
-            await JsonSerializer.SerializeAsync(createStream, preset);
-            await createStream.DisposeAsync();
+            string fileName = Path.Combine(_presetDirectoryFullPath, $"{name}{PresetExt}");
+            await using FileStream stream = File.Create(fileName);
+            await JsonSerializer.SerializeAsync(stream, preset);
+            await stream.DisposeAsync();
         }
 
         public class Preset
