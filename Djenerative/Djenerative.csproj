@@ -8,17 +8,21 @@
     <Company>Wilding Studios</Company>
     <Authors>Matthew Wilding</Authors>
     <AssemblyName>Djenerative</AssemblyName>
-	<!--<PublishSingleFile>true</PublishSingleFile>
-	<SelfContained>false</SelfContained>
-	<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-	<PublishReadyToRun>true</PublishReadyToRun>
-	<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>-->
+	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+	<ApplicationIcon>icon-white.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
     <PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
-    <PackageReference Include="Melanchall.DryWetMidi" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\drywetmidi\DryWetMidi\Melanchall.DryWetMidi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
