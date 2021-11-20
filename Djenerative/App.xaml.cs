@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Djenerative
@@ -18,45 +17,60 @@ namespace Djenerative
 
         public App()
         {
-            try
-            {
-                Update();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
         }
 
         private void Update()
         {
-            string version = new WebClient().DownloadString(VersionLink).Replace("\\r\\n", "").Replace("\\n", "").Trim();
-            bool success = int.TryParse(version, out int _);
-            if (!success)
+            try
             {
-                Environment.FailFast("No Internet");
+                string version = new WebClient().DownloadString(VersionLink).Replace("\\r\\n", "").Replace("\\n", "").Trim();
+                bool success = int.TryParse(version, out int _);
+                if (!success)
+                {
+                    Environment.FailFast("No Internet");
+                }
+                if (Djenerative.Properties.Preset.Default.Version == int.Parse(version)) return;
+
+                string download = Path.Combine(Environment.CurrentDirectory, "update.tmp");
+                new WebClient().DownloadFile(DownloadLink, download);
+
+                var process = Process.GetCurrentProcess();
+                string fullPath = process.MainModule!.FileName!;
+                string exe = Path.GetFileName(fullPath);
+                string tmp = Path.GetFileName(download);
+
+                Djenerative.Properties.Preset.Default.Version = int.Parse(version);
+                Djenerative.Properties.Preset.Default.Save();
+
+                ProcessStartInfo Info = new ProcessStartInfo();
+                Info.Arguments = $"/C choice /C Y /N /D Y /T 3 & Del \"\"\"{exe}\"\"\" & TIMEOUT /T 1 & Ren \"\"\"{tmp}\"\"\" \"\"\"{exe}\"\"\" & TIMEOUT /T 1 & \"\"\"{fullPath}\"\"\"";
+                Info.WindowStyle = ProcessWindowStyle.Hidden;
+                Info.CreateNoWindow = true;
+                Info.FileName = "cmd.exe";
+                Process.Start(Info);
+
+                Environment.FailFast("Updating");
             }
-            if (Djenerative.Properties.Preset.Default.Version == int.Parse(version)) return;
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                Environment.FailFast("Update Failed");
+            }
+        }
 
-            string download = Path.Combine(Environment.CurrentDirectory, "update.tmp");
-            new WebClient().DownloadFile(DownloadLink, download);
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+#if DEBUG
+            return;
+#endif
+            Process proc = Process.GetCurrentProcess();
+            int count = Process.GetProcesses().Count(p => p.ProcessName == proc.ProcessName);
 
-            var process = Process.GetCurrentProcess();
-            string fullPath = process.MainModule!.FileName!;
-            string exe = Path.GetFileName(fullPath);
-            string tmp = Path.GetFileName(download);
-
-            Djenerative.Properties.Preset.Default.Version = int.Parse(version);
-            Djenerative.Properties.Preset.Default.Save();
-
-            ProcessStartInfo Info = new ProcessStartInfo();
-            Info.Arguments = $"/C choice /C Y /N /D Y /T 3 & Del \"\"\"{exe}\"\"\" & TIMEOUT /T 1 & Ren \"\"\"{tmp}\"\"\" \"\"\"{exe}\"\"\" & TIMEOUT /T 1 & \"\"\"{fullPath}\"\"\"";
-            Info.WindowStyle = ProcessWindowStyle.Hidden;
-            Info.CreateNoWindow = true;
-            Info.FileName = "cmd.exe";
-            Process.Start(Info);
-
-            Environment.FailFast("Updating");
+            if (count > 1)
+            {
+                Environment.FailFast("Already Running");
+            }
+            Update();
         }
     }
 }
