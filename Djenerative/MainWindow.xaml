@@ -9,7 +9,8 @@
                        xmlns:customUi="clr-namespace:Djenerative.CustomUI"
                        mc:Ignorable="d"
                        Title="Djenerative"
-                       SizeToContent="WidthAndHeight"
+                       Width="780"
+                       Height="668"
                        WindowStartupLocation="CenterScreen"
                        ResizeMode="CanMinimize"
                        Background="{DynamicResource BackgroundImage}"
@@ -26,7 +27,7 @@
     </Window.Resources>
 
     <StackPanel
-        HorizontalAlignment="Left"
+        HorizontalAlignment="Center"
         Margin="20, 6, 20, 12">
 
         <Label
@@ -103,24 +104,6 @@
                     Label="Notes"
                     Minimum="1"
                     Maximum="9999"
-                    HorizontalAlignment="Stretch"
-                    Width="100"
-                    Margin="5, 0, 5, 0"/>
-
-                <customUi:NumericEntryControl
-                    x:Name="LeadOctMin"
-                    Label="Lead Oct Min"
-                    Minimum="1"
-                    Maximum="3"
-                    HorizontalAlignment="Stretch"
-                    Width="100"
-                    Margin="5, 0, 5, 0"/>
-
-                <customUi:NumericEntryControl
-                    x:Name="LeadOctMax"
-                    Label="Lead Oct Max"
-                    Minimum="1"
-                    Maximum="3"
                     HorizontalAlignment="Stretch"
                     Width="100"
                     Margin="5, 0, 5, 0"/>
@@ -253,6 +236,41 @@
                 Margin="5, 0, 5, 0"/>
         </DockPanel>
 
+        <Label
+            Content="Lead Octave Probability"
+            HorizontalContentAlignment="Center"
+            FontSize="15"
+            FontWeight="ExtraBlack"
+            Margin="0, 0, 0, 5"/>
+
+        <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+            <customUi:NumericEntryControl
+                x:Name="WeightLeadOct1"
+                Label="Lead Oct 1"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightLeadOct2"
+                Label="Lead Oct 2"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightLeadOct3"
+                Label="Lead Oct 3"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+        </DockPanel>
 
         <StackPanel Margin="0, 0, 0, 20">
             <Label

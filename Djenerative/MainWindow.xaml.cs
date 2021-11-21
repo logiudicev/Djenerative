@@ -86,8 +86,9 @@ namespace Djenerative
             WeightTimingQuarter.Value = preset.WeightTimingQuarter;
             WeightTimingHalf.Value = preset.WeightTimingHalf;
             WeightTimingWhole.Value = preset.WeightTimingWhole;
-            LeadOctMin.Value = preset.LeadOctMin;
-            LeadOctMax.Value = preset.LeadOctMax;
+            WeightLeadOct1.Value = preset.WeightLeadOct1;
+            WeightLeadOct2.Value = preset.WeightLeadOct2;
+            WeightLeadOct3.Value = preset.WeightLeadOct3;
         }
 
         public async Task SavePreset(string name)
@@ -134,14 +135,15 @@ namespace Djenerative
                 WeightTimingQuarter = WeightTimingQuarter.Value,
                 WeightTimingHalf = WeightTimingHalf.Value,
                 WeightTimingWhole = WeightTimingWhole.Value,
-                LeadOctMin = LeadOctMin.Value,
-                LeadOctMax = LeadOctMax.Value
+                WeightLeadOct1 = WeightLeadOct1.Value,
+                WeightLeadOct2 = WeightLeadOct2.Value,
+                WeightLeadOct3 = WeightLeadOct3.Value
             };
 
             await Preset.CreatePreset(preset, name);
         }
 
-        public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead, Probability.Timing probTiming, Ranges.Settings settings)
+        public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.ProbabilityCollection probability)
         {
             string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmssfff}.mid";
 
@@ -156,46 +158,46 @@ namespace Djenerative
             List<Pattern?> bass = new();
             List<Pattern?> drums = new();
 
-            Patterns pattern = new(scale, rootNote, probScaleRhythm, probScaleLead, probTiming, settings);
+            Patterns pattern = new(scale, rootNote, probability);
 
             Patterns.NoteGroup group = new();
 
             Weighted.ChanceExecutor chanceExecutor = new();
 
-            if (probArticulation.RhythmMuted != 0 && probScaleRhythm.Enabled)
+            if (probability.Articulation.RhythmMuted != 0 && probability.ScaleRhythm.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
                     group = pattern.GenerateNote(Enums.NoteRequest.RhythmMute);
-                }, probArticulation.RhythmMuted));
+                }, probability.Articulation.RhythmMuted));
             }
-            if (probArticulation.RhythmOpen != 0 && probScaleRhythm.Enabled)
+            if (probability.Articulation.RhythmOpen != 0 && probability.ScaleRhythm.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
                     group = pattern.GenerateNote(Enums.NoteRequest.RhythmOpen);
-                }, probArticulation.RhythmOpen));
+                }, probability.Articulation.RhythmOpen));
             }
-            if (probArticulation.Lead != 0 && probScaleLead.Enabled)
+            if (probability.Articulation.Lead != 0 && probability.ScaleLead.Enabled && probability.LeadOctaves.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
                     group = pattern.GenerateNote(Enums.NoteRequest.Lead, true);
-                }, probArticulation.Lead));
+                }, probability.Articulation.Lead));
             }
-            if (probArticulation.Harmonic != 0 && probScaleLead.Enabled)
+            if (probability.Articulation.Harmonic != 0 && probability.ScaleLead.Enabled && probability.LeadOctaves.Enabled)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
                     group = pattern.GenerateNote(Enums.NoteRequest.Harmonic, true);
-                }, probArticulation.Harmonic));
+                }, probability.Articulation.Harmonic));
             }
-            if (probArticulation.Gap != 0)
+            if (probability.Articulation.Gap != 0)
             {
                 chanceExecutor.Add(new Weighted.ChanceParam(() =>
                 {
                     group = pattern.GenerateNote(Enums.NoteRequest.Gap, true);
-                }, probArticulation.Gap));
+                }, probability.Articulation.Gap));
             }
 
             for (int i = 0; i < length; i++)
@@ -281,53 +283,53 @@ namespace Djenerative
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
-
-            var probArticulation = new Probability.Articulation
+            
+            var probability = new Probability.ProbabilityCollection
             {
-                RhythmMuted = WeightRhythmMuted.Value,
-                RhythmOpen = WeightRhythmOpen.Value,
-                Lead = WeightLead.Value,
-                Gap = WeightGaps.Value,
-                Harmonic = WeightHarmonic.Value!
-            };
-
-            var probScaleRhythm = new Probability.Scale
-            {
-                Degree1 = WeightScaleRhythm1.Value,
-                Degree2 = WeightScaleRhythm2.Value,
-                Degree3 = WeightScaleRhythm3.Value,
-                Degree4 = WeightScaleRhythm4.Value,
-                Degree5 = WeightScaleRhythm5.Value,
-                Degree6 = WeightScaleRhythm6.Value,
-                Degree7 = WeightScaleRhythm7.Value
-            };
-
-            var probScaleLead = new Probability.Scale
-            {
-                Degree1 = WeightScaleLead1.Value,
-                Degree2 = WeightScaleLead2.Value,
-                Degree3 = WeightScaleLead3.Value,
-                Degree4 = WeightScaleLead4.Value,
-                Degree5 = WeightScaleLead5.Value,
-                Degree6 = WeightScaleLead6.Value,
-                Degree7 = WeightScaleLead7.Value
-            };
-
-            var probTiming = new Probability.Timing
-            {
-                SixtyFourth = WeightTimingSixtyFourth.Value,
-                ThirtySecond = WeightTimingThirtySecond.Value,
-                Sixteenth = WeightTimingSixteenth.Value,
-                Eighth = WeightTimingEight.Value,
-                Quarter = WeightTimingQuarter.Value,
-                Half = WeightTimingHalf.Value,
-                Whole = WeightTimingWhole.Value
-            };
-
-            var settings = new Ranges.Settings
-            {
-                LeadOctMin = LeadOctMin.Value,
-                LeadOctMax = LeadOctMax.Value
+                Articulation = new Probability.Articulation
+                {
+                    RhythmMuted = WeightRhythmMuted.Value,
+                    RhythmOpen = WeightRhythmOpen.Value,
+                    Lead = WeightLead.Value,
+                    Gap = WeightGaps.Value,
+                    Harmonic = WeightHarmonic.Value
+                },
+                ScaleRhythm = new Probability.Scale
+                {
+                    Degree1 = WeightScaleRhythm1.Value,
+                    Degree2 = WeightScaleRhythm2.Value,
+                    Degree3 = WeightScaleRhythm3.Value,
+                    Degree4 = WeightScaleRhythm4.Value,
+                    Degree5 = WeightScaleRhythm5.Value,
+                    Degree6 = WeightScaleRhythm6.Value,
+                    Degree7 = WeightScaleRhythm7.Value
+                },
+                ScaleLead = new Probability.Scale
+                {
+                    Degree1 = WeightScaleLead1.Value,
+                    Degree2 = WeightScaleLead2.Value,
+                    Degree3 = WeightScaleLead3.Value,
+                    Degree4 = WeightScaleLead4.Value,
+                    Degree5 = WeightScaleLead5.Value,
+                    Degree6 = WeightScaleLead6.Value,
+                    Degree7 = WeightScaleLead7.Value
+                },
+                Timing = new Probability.Timing
+                {
+                    SixtyFourth = WeightTimingSixtyFourth.Value,
+                    ThirtySecond = WeightTimingThirtySecond.Value,
+                    Sixteenth = WeightTimingSixteenth.Value,
+                    Eighth = WeightTimingEight.Value,
+                    Quarter = WeightTimingQuarter.Value,
+                    Half = WeightTimingHalf.Value,
+                    Whole = WeightTimingWhole.Value
+                },
+                LeadOctaves = new Probability.LeadOctaves
+                {
+                    LeadOct1 = WeightLeadOct1.Value,
+                    LeadOct2 = WeightLeadOct2.Value,
+                    LeadOct3 = WeightLeadOct3.Value
+                }
             };
 
             await CreateMidiFile(
@@ -335,11 +337,7 @@ namespace Djenerative
                 Note.Get(rootNote, rootOctave),
                 bpm,
                 notes,
-                probArticulation,
-                probScaleRhythm,
-                probScaleLead,
-                probTiming,
-                settings);
+                probability);
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

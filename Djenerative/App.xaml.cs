@@ -26,16 +26,6 @@ namespace Djenerative
         {
         }
 
-        private async Task WebShit(string url)
-        {
-            // best practice to create one HttpClient per Application and inject it
-            
-
-            using HttpResponseMessage response = await _client.GetAsync(url);
-            using HttpContent content = response.Content;
-            var json = await content.ReadAsStringAsync();
-        }
-
         private void UpdateCheck()
         {
             try
@@ -116,7 +106,7 @@ namespace Djenerative
         {
 
 #if DEBUG
-            //return;
+            return;
 #endif
 #pragma warning disable CS0162 // Unreachable code detected
 

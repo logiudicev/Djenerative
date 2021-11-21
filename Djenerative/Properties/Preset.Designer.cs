@@ -37,7 +37,7 @@ namespace Djenerative.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int Version {
             get {
                 return ((int)(this["Version"]));

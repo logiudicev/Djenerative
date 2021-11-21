@@ -18,33 +18,16 @@ public class Patterns
     public Probability.Scale ProbScaleRhythm { get; }
     public Probability.Scale ProbScaleLead { get; }
     public Probability.Timing ProbTiming { get; }
-    public Ranges.Settings Settings { get; }
+    public Probability.LeadOctaves ProbLeadOct { get; }
 
-    public Patterns(Scales.Intervals scale, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead, Probability.Timing probTiming, Ranges.Settings settings)
+    public Patterns(Scales.Intervals scale, Note rootNote, Probability.ProbabilityCollection probability)
     {
-        Settings = settings;
         Scale = scale;
         RootNote = rootNote;
-        ProbScaleRhythm = probScaleRhythm;
-        ProbScaleLead = probScaleLead;
-        ProbTiming = probTiming;
-
-        if (settings.LeadOctMin <= settings.LeadOctMax)
-        {
-            Settings = new Ranges.Settings
-            {
-                LeadOctMin = settings.LeadOctMin,
-                LeadOctMax = settings.LeadOctMax
-            };
-        }
-        else
-        {
-            Settings = new Ranges.Settings
-            {
-                LeadOctMin = settings.LeadOctMax,
-                LeadOctMax = settings.LeadOctMin
-            };
-        }
+        ProbScaleRhythm = probability.ScaleRhythm;
+        ProbScaleLead = probability.ScaleLead;
+        ProbTiming = probability.Timing;
+        ProbLeadOct = probability.LeadOctaves;
     }
 
     public class NoteGroup
@@ -323,7 +306,37 @@ public class Patterns
         else
         {
             int octave = RootNote.Octave;
-            OctaveCache = Randomise.Run(octave + Settings.LeadOctMin, octave + Settings.LeadOctMax);
+
+            int seed = 1;
+
+            Weighted.ChanceExecutor chanceExecutor = new();
+
+            if (ProbLeadOct.LeadOct1 != 0)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    seed = 1;
+                }, ProbLeadOct.LeadOct1));
+            }
+            if (ProbLeadOct.LeadOct2 != 0)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    seed = 2;
+                }, ProbLeadOct.LeadOct2));
+            }
+            if (ProbLeadOct.LeadOct3 != 0)
+            {
+                chanceExecutor.Add(new Weighted.ChanceParam(() =>
+                {
+                    seed = 2;
+                }, ProbLeadOct.LeadOct3));
+            }
+
+            chanceExecutor.Execute();
+
+            OctaveCache = octave + seed;
+
             IntervalCache = GetInterval(ProbScaleLead);
         }
 

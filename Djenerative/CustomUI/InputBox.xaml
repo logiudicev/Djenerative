@@ -7,7 +7,8 @@
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:local="clr-namespace:Djenerative.CustomUI"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
+        Width="180"
+        Height="80"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="#2a2b34"
@@ -15,8 +16,8 @@
         WindowStyle="ToolWindow"
         Topmost="True">
 
-    <StackPanel HorizontalAlignment="Center" Margin="10">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
         <TextBox Name="InputText"
-                 HorizontalContentAlignment="Center" Width="100" KeyDown="InputText_KeyDown"/>
+                 HorizontalContentAlignment="Center" Width="150" KeyDown="InputText_KeyDown"/>
     </StackPanel>
 </controls:AdonisWindow>

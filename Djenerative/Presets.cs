@@ -113,8 +113,9 @@ namespace Djenerative
             public int WeightTimingQuarter { get; set; } = 0;
             public int WeightTimingHalf { get; set; } = 0;
             public int WeightTimingWhole { get; set; } = 0;
-            public int LeadOctMin { get; set; } = 1;
-            public int LeadOctMax { get; set; } = 3;
+            public int WeightLeadOct1 { get; set; } = 1;
+            public int WeightLeadOct2 { get; set; } = 1;
+            public int WeightLeadOct3 { get; set; } = 1;
         }
     }
 }
