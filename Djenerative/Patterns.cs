@@ -62,24 +62,28 @@ public class Patterns
         Pattern bass;
         Pattern drums;
 
-        var timeSpan = RandomNoteTime();
+        MusicalTimeSpan timeSpan;
 
         switch (request)
         {
             case Enums.NoteRequest.Gap:
+                timeSpan = RandomNoteTime(true);
                 guitar1 = guitar2 = bass = drums = Gap(timeSpan);
                 break;
             case Enums.NoteRequest.RhythmOpen:
+                timeSpan = RandomNoteTime();
                 guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Open, timeSpan);
                 bass = Bass(timeSpan);
                 drums = Drums(timeSpan);
                 break;
             case Enums.NoteRequest.RhythmMute:
+                timeSpan = RandomNoteTime();
                 guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Mute, timeSpan);
                 bass = Bass(timeSpan);
                 drums = Drums(timeSpan);
                 break;
             case Enums.NoteRequest.Lead:
+                timeSpan = RandomNoteTime();
                 if (harmony)
                 {
                     guitar1 = Lead(timeSpan);
@@ -92,6 +96,7 @@ public class Patterns
                 bass = drums = Gap(timeSpan);
                 break;
             case Enums.NoteRequest.Harmonic:
+                timeSpan = RandomNoteTime();
                 if (harmony)
                 {
                     guitar1 = Harmonic(timeSpan);
@@ -209,46 +214,62 @@ public class Patterns
             .Build();
     }
 
-    public MusicalTimeSpan RandomNoteTime()
+    public MusicalTimeSpan RandomNoteTime(bool gap = false)
     {
         int seed = 0;
 
         Weighted.ChanceExecutor chanceExecutor = new();
-
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        if (gap)
         {
-            seed = 64;
-        }, ProbTiming.SixtyFourth));
+            // TODO Add GUI for ratio
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
-        {
-            seed = 32;
-        }, ProbTiming.ThirtySecond));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 16;
+            }, 10));
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 8;
+            }, 2));
+        }
+        else
         {
-            seed = 16;
-        }, ProbTiming.Sixteenth));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 64;
+            }, ProbTiming.SixtyFourth));
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
-        {
-            seed = 8;
-        }, ProbTiming.Eighth));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 32;
+            }, ProbTiming.ThirtySecond));
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
-        {
-            seed = 4;
-        }, ProbTiming.Quarter));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 16;
+            }, ProbTiming.Sixteenth));
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
-        {
-            seed = 2;
-        }, ProbTiming.Half));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 8;
+            }, ProbTiming.Eighth));
 
-        chanceExecutor.Add(new Weighted.ChanceParam(() =>
-        {
-            seed = 1;
-        }, ProbTiming.Whole));
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 4;
+            }, ProbTiming.Quarter));
+
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 2;
+            }, ProbTiming.Half));
+
+            chanceExecutor.Add(new Weighted.ChanceParam(() =>
+            {
+                seed = 1;
+            }, ProbTiming.Whole));
+        }
 
         chanceExecutor.Execute();
 

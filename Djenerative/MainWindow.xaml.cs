@@ -143,7 +143,7 @@ namespace Djenerative
 
         public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead, Probability.Timing probTiming, Ranges.Settings settings)
         {
-            string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{scale.Interval1}-{scale.Interval2}-{scale.Interval3}-{scale.Interval4}-{scale.Interval5}-{scale.Interval6}-{scale.Interval7}-{DateTime.Now:yyyyMMddHHmmss}.mid";
+            string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmssfff}.mid";
 
             var midiFile = new MidiFile(new TrackChunk());
             var tempoMap = TempoMap.Create(Tempo.FromBeatsPerMinute(bpm));
