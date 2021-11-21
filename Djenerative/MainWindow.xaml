@@ -50,7 +50,8 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 VerticalAlignment="Top"
-                Height="25" SelectionChanged="PresetComboBox_SelectionChanged"/>
+                Height="25"
+                SelectionChanged="PresetComboBox_SelectionChanged"/>
 
             <DockPanel HorizontalAlignment="Center">
                 <Button
