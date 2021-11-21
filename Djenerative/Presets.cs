@@ -105,7 +105,7 @@ namespace Djenerative
             public int Interval4 { get; set; } = 5;
             public int Interval5 { get; set; } = 7;
             public int Interval6 { get; set; } = 8;
-            public int Interval7 { get; set; } = 10;
+            public int Interval7 { get; set; } = 11;
             public int WeightTimingSixtyFourth { get; set; } = 0;
             public int WeightTimingThirtySecond { get; set; } = 0;
             public int WeightTimingSixteenth { get; set; } = 40;
