@@ -145,10 +145,11 @@ namespace Djenerative
         {
             string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{DateTime.Now:yyyyMMddHHmmssfff}.mid";
 
-            var midiFile = new MidiFile(new TrackChunk());
+            var midiFile = new MidiFile(new TrackChunk(new SequenceTrackNameEvent("Djenerative")));
             var tempoMap = TempoMap.Create(Tempo.FromBeatsPerMinute(bpm));
-            //midiFile.ReplaceTempoMap(tempoMap);
-            //midiFile.Chunks.Add(new TrackChunk());
+            midiFile.ReplaceTempoMap(tempoMap);
+
+            var testing = midiFile.GetTempoMap();
             
             List<Pattern?> guitar1 = new();
             List<Pattern?> guitar2 = new();
@@ -207,10 +208,10 @@ namespace Djenerative
                 drums.Add(group.Drums);
             }
             
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1, Enums.GmInst.OverdrivenGuitar));
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2, Enums.GmInst.OverdrivenGuitar));
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, bass, Enums.GmInst.ElectricBassPick));
-            midiFile.Chunks.Add(ChunkBuilder(tempoMap, drums, Enums.GmInst.ElectricBassPick));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar1, Enums.GmInst.OverdrivenGuitar, "GuitarL"));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, guitar2, Enums.GmInst.OverdrivenGuitar, "GuitarR"));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, bass, Enums.GmInst.ElectricBassPick, "Bass"));
+            midiFile.Chunks.Add(ChunkBuilder(tempoMap, drums, Enums.GmInst.ElectricBassPick, "Kick"));
 
             var midiPath = Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "MIDI"));
             var filePath = Path.Combine(midiPath.FullName, file);
@@ -227,15 +228,15 @@ namespace Djenerative
             Process.Start("explorer.exe", argument);
         }
 
-        private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern?> patterns, Enums.GmInst instrument)
+        private static TrackChunk ChunkBuilder(TempoMap tempoMap, List<Pattern?> patterns, Enums.GmInst instrument, string name)
         {
             var patternList = patterns.CombineInSequence();
             var trackChunk = patternList.ToTrackChunk(tempoMap);
-
             using var timedEventsManager = trackChunk.ManageTimedEvents();
             timedEventsManager.Events.AddEvent(
                 new ProgramChangeEvent((SevenBitNumber) (byte) instrument),
                 time: 0);
+            timedEventsManager.Events.AddEvent(new SequenceTrackNameEvent(name), 0);
 
             return trackChunk;
         }

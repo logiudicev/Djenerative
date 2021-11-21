@@ -108,8 +108,8 @@ namespace Djenerative
             public int Interval7 { get; set; } = 10;
             public int WeightTimingSixtyFourth { get; set; } = 0;
             public int WeightTimingThirtySecond { get; set; } = 0;
-            public int WeightTimingSixteenth { get; set; } = 20;
-            public int WeightTimingEighth { get; set; } = 2;
+            public int WeightTimingSixteenth { get; set; } = 40;
+            public int WeightTimingEighth { get; set; } = 1;
             public int WeightTimingQuarter { get; set; } = 0;
             public int WeightTimingHalf { get; set; } = 0;
             public int WeightTimingWhole { get; set; } = 0;
