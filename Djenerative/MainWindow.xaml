@@ -89,15 +89,6 @@
 
             <DockPanel HorizontalAlignment="Center">
                 <customUi:NumericEntryControl
-                    x:Name="Octave"
-                    Label="Octave"
-                    Minimum="1"
-                    Maximum="3"
-                    HorizontalAlignment="Stretch"
-                    Width="80"
-                    Margin="5, 0, 5, 0"/>
-
-                <customUi:NumericEntryControl
                     x:Name="Bpm"
                     Label="BPM"
                     Minimum="1"
@@ -111,6 +102,24 @@
                     Label="Notes"
                     Minimum="1"
                     Maximum="9999"
+                    HorizontalAlignment="Stretch"
+                    Width="100"
+                    Margin="5, 0, 5, 0"/>
+
+                <customUi:NumericEntryControl
+                    x:Name="LeadOctMin"
+                    Label="Lead Oct Min"
+                    Minimum="1"
+                    Maximum="3"
+                    HorizontalAlignment="Stretch"
+                    Width="100"
+                    Margin="5, 0, 5, 0"/>
+
+                <customUi:NumericEntryControl
+                    x:Name="LeadOctMax"
+                    Label="Lead Oct Max"
+                    Minimum="1"
+                    Maximum="3"
                     HorizontalAlignment="Stretch"
                     Width="100"
                     Margin="5, 0, 5, 0"/>
@@ -171,6 +180,79 @@
                 Margin="5, 0, 5, 0"/>
         </DockPanel>
 
+        <Label
+            Content="Timing Probability"
+            HorizontalContentAlignment="Center"
+            FontSize="15"
+            FontWeight="ExtraBlack"
+            Margin="0, 0, 0, 5"/>
+
+        <DockPanel HorizontalAlignment="Center" Margin="0, 0, 0, 10">
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingSixtyFourth"
+                Label="1/64"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingThirtySecond"
+                Label="1/32"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingSixteenth"
+                Label="1/16"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingEight"
+                Label="1/8"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingQuarter"
+                Label="1/4"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingHalf"
+                Label="1/2"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+
+            <customUi:NumericEntryControl
+                x:Name="WeightTimingWhole"
+                Label="1/1"
+                Minimum="0"
+                Maximum="99"
+                HorizontalAlignment="Stretch"
+                Width="80"
+                Margin="5, 0, 5, 0"/>
+        </DockPanel>
+
+
         <StackPanel Margin="0, 0, 0, 20">
             <Label
                 Content="Key"
@@ -193,6 +275,15 @@
                         Content="Root Note"
                         HorizontalContentAlignment="Center"/>
                 </StackPanel>
+
+                <customUi:NumericEntryControl
+                    x:Name="Octave"
+                    Label="Octave"
+                    Minimum="1"
+                    Maximum="3"
+                    HorizontalAlignment="Stretch"
+                    Width="80"
+                    Margin="5, 0, 5, 0"/>
 
                 <StackPanel Margin="5, 0, 5, 0">
                     <ComboBox

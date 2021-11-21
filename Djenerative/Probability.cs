@@ -30,5 +30,16 @@
             public double Degree6 { get; set; }
             public double Degree7 { get; set; }
         }
+
+        public class Timing
+        {
+            public double SixtyFourth { get; set; }
+            public double ThirtySecond { get; set; }
+            public double Sixteenth { get; set; }
+            public double Eighth { get; set; }
+            public double Quarter { get; set; }
+            public double Half { get; set; }
+            public double Whole { get; set; }
+        }
     }
 }

@@ -85,7 +85,7 @@ namespace Djenerative
             public int WeightLead { get; set; } = 60;
             public int WeightGap { get; set; } = 5;
             public int WeightHarmonic { get; set; } = 0;
-            public int WeightRhythm1 { get; set; } = 1;
+            public int WeightRhythm1 { get; set; } = 5;
             public int WeightRhythm2 { get; set; } = 1;
             public int WeightRhythm3 { get; set; } = 1;
             public int WeightRhythm4 { get; set; } = 1;
@@ -106,6 +106,15 @@ namespace Djenerative
             public int Interval5 { get; set; } = 7;
             public int Interval6 { get; set; } = 8;
             public int Interval7 { get; set; } = 10;
+            public int WeightTimingSixtyFourth { get; set; } = 0;
+            public int WeightTimingThirtySecond { get; set; } = 0;
+            public int WeightTimingSixteenth { get; set; } = 20;
+            public int WeightTimingEighth { get; set; } = 2;
+            public int WeightTimingQuarter { get; set; } = 0;
+            public int WeightTimingHalf { get; set; } = 0;
+            public int WeightTimingWhole { get; set; } = 0;
+            public int LeadOctMin { get; set; } = 1;
+            public int LeadOctMax { get; set; } = 3;
         }
     }
 }

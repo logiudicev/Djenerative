@@ -79,6 +79,15 @@ namespace Djenerative
             Interval5.Value = preset.Interval5;
             Interval6.Value = preset.Interval6;
             Interval7.Value = preset.Interval7;
+            WeightTimingSixtyFourth.Value = preset.WeightTimingSixtyFourth;
+            WeightTimingThirtySecond.Value = preset.WeightTimingThirtySecond;
+            WeightTimingSixteenth.Value = preset.WeightTimingSixteenth;
+            WeightTimingEight.Value = preset.WeightTimingEighth;
+            WeightTimingQuarter.Value = preset.WeightTimingQuarter;
+            WeightTimingHalf.Value = preset.WeightTimingHalf;
+            WeightTimingWhole.Value = preset.WeightTimingWhole;
+            LeadOctMin.Value = preset.LeadOctMin;
+            LeadOctMax.Value = preset.LeadOctMax;
         }
 
         public async Task SavePreset(string name)
@@ -117,13 +126,22 @@ namespace Djenerative
                 Interval4 = Interval4.Value,
                 Interval5 = Interval5.Value,
                 Interval6 = Interval6.Value,
-                Interval7 = Interval7.Value
+                Interval7 = Interval7.Value,
+                WeightTimingSixtyFourth = WeightTimingSixtyFourth.Value,
+                WeightTimingThirtySecond = WeightTimingThirtySecond.Value,
+                WeightTimingSixteenth = WeightTimingSixteenth.Value,
+                WeightTimingEighth = WeightTimingEight.Value,
+                WeightTimingQuarter = WeightTimingQuarter.Value,
+                WeightTimingHalf = WeightTimingHalf.Value,
+                WeightTimingWhole = WeightTimingWhole.Value,
+                LeadOctMin = LeadOctMin.Value,
+                LeadOctMax = LeadOctMax.Value
             };
 
             await Preset.CreatePreset(preset, name);
         }
 
-        public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
+        public static Task CreateMidiFile(Scales.Intervals scale, Note rootNote, double bpm, uint length, Probability.Articulation probArticulation, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead, Probability.Timing probTiming, Ranges.Settings settings)
         {
             string file = $"{bpm}-{rootNote.NoteName}{rootNote.Octave}-{length}-{scale.Interval1}-{scale.Interval2}-{scale.Interval3}-{scale.Interval4}-{scale.Interval5}-{scale.Interval6}-{scale.Interval7}-{DateTime.Now:yyyyMMddHHmmss}.mid";
 
@@ -137,7 +155,7 @@ namespace Djenerative
             List<Pattern?> bass = new();
             List<Pattern?> drums = new();
 
-            Patterns pattern = new(scale, rootNote, probScaleRhythm, probScaleLead);
+            Patterns pattern = new(scale, rootNote, probScaleRhythm, probScaleLead, probTiming, settings);
 
             Patterns.NoteGroup group = new();
 
@@ -294,6 +312,23 @@ namespace Djenerative
                 Degree7 = WeightScaleLead7.Value
             };
 
+            var probTiming = new Probability.Timing
+            {
+                SixtyFourth = WeightTimingSixtyFourth.Value,
+                ThirtySecond = WeightTimingThirtySecond.Value,
+                Sixteenth = WeightTimingSixteenth.Value,
+                Eighth = WeightTimingEight.Value,
+                Quarter = WeightTimingQuarter.Value,
+                Half = WeightTimingHalf.Value,
+                Whole = WeightTimingWhole.Value
+            };
+
+            var settings = new Ranges.Settings
+            {
+                LeadOctMin = LeadOctMin.Value,
+                LeadOctMax = LeadOctMax.Value
+            };
+
             await CreateMidiFile(
                 scale,
                 Note.Get(rootNote, rootOctave),
@@ -301,7 +336,9 @@ namespace Djenerative
                 notes,
                 probArticulation,
                 probScaleRhythm,
-                probScaleLead);
+                probScaleLead,
+                probTiming,
+                settings);
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

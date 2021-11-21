@@ -17,13 +17,34 @@ public class Patterns
     public Note RootNote { get; }
     public Probability.Scale ProbScaleRhythm { get; }
     public Probability.Scale ProbScaleLead { get; }
+    public Probability.Timing ProbTiming { get; }
+    public Ranges.Settings Settings { get; }
 
-    public Patterns(Scales.Intervals scale, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead)
+    public Patterns(Scales.Intervals scale, Note rootNote, Probability.Scale probScaleRhythm, Probability.Scale probScaleLead, Probability.Timing probTiming, Ranges.Settings settings)
     {
+        Settings = settings;
         Scale = scale;
         RootNote = rootNote;
         ProbScaleRhythm = probScaleRhythm;
         ProbScaleLead = probScaleLead;
+        ProbTiming = probTiming;
+
+        if (settings.LeadOctMin <= settings.LeadOctMax)
+        {
+            Settings = new Ranges.Settings
+            {
+                LeadOctMin = settings.LeadOctMin,
+                LeadOctMax = settings.LeadOctMax
+            };
+        }
+        else
+        {
+            Settings = new Ranges.Settings
+            {
+                LeadOctMin = settings.LeadOctMax,
+                LeadOctMax = settings.LeadOctMin
+            };
+        }
     }
 
     public class NoteGroup
@@ -41,44 +62,46 @@ public class Patterns
         Pattern bass;
         Pattern drums;
 
+        var timeSpan = RandomNoteTime();
+
         switch (request)
         {
             case Enums.NoteRequest.Gap:
-                guitar1 = guitar2 = bass = drums = Gap();
+                guitar1 = guitar2 = bass = drums = Gap(timeSpan);
                 break;
             case Enums.NoteRequest.RhythmOpen:
-                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Open);
-                bass = Bass();
-                drums = Drums();
+                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Open, timeSpan);
+                bass = Bass(timeSpan);
+                drums = Drums(timeSpan);
                 break;
             case Enums.NoteRequest.RhythmMute:
-                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Mute);
-                bass = Bass();
-                drums = Drums();
+                guitar1 = guitar2 = Rhythm(Enums.NoteVelocity.Mute, timeSpan);
+                bass = Bass(timeSpan);
+                drums = Drums(timeSpan);
                 break;
             case Enums.NoteRequest.Lead:
                 if (harmony)
                 {
-                    guitar1 = Lead();
-                    guitar2 = Lead(harmony);
+                    guitar1 = Lead(timeSpan);
+                    guitar2 = Lead(timeSpan, harmony);
                 }
                 else
                 {
-                    guitar1 = guitar2 = Lead();
+                    guitar1 = guitar2 = Lead(timeSpan);
                 }
-                bass = drums = Gap();
+                bass = drums = Gap(timeSpan);
                 break;
             case Enums.NoteRequest.Harmonic:
                 if (harmony)
                 {
-                    guitar1 = Harmonic();
-                    guitar2 = Harmonic(harmony);
+                    guitar1 = Harmonic(timeSpan);
+                    guitar2 = Harmonic(timeSpan, harmony);
                 }
                 else
                 {
-                    guitar1 = guitar2 = Harmonic();
+                    guitar1 = guitar2 = Harmonic(timeSpan);
                 }
-                bass = drums = Gap();
+                bass = drums = Gap(timeSpan);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(request), request, null);
@@ -164,7 +187,7 @@ public class Patterns
         };
     }
 
-    public Pattern Rhythm(Enums.NoteVelocity velocity, bool harmony = false, int addRange = 0)
+    public Pattern Rhythm(Enums.NoteVelocity velocity, MusicalTimeSpan timeSpan, bool harmony = false)
     {
         if (harmony)
         {
@@ -173,31 +196,87 @@ public class Patterns
         else
         {
             int octave = RootNote.Octave;
-            OctaveCache = addRange == 0 ? octave : Randomise.Run(octave + 1, octave + addRange);
+            OctaveCache = octave;
             IntervalCache = GetInterval(ProbScaleRhythm);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetNoteLength(timeSpan)
             .SetRootNote(root)
             .Note(IntervalCache, new SevenBitNumber((byte) velocity))
             .Build();
     }
 
-    public Pattern Bass()
+    public MusicalTimeSpan RandomNoteTime()
+    {
+        int seed = 0;
+
+        Weighted.ChanceExecutor chanceExecutor = new();
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 64;
+        }, ProbTiming.SixtyFourth));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 32;
+        }, ProbTiming.ThirtySecond));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 16;
+        }, ProbTiming.Sixteenth));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 8;
+        }, ProbTiming.Eighth));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 4;
+        }, ProbTiming.Quarter));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 2;
+        }, ProbTiming.Half));
+
+        chanceExecutor.Add(new Weighted.ChanceParam(() =>
+        {
+            seed = 1;
+        }, ProbTiming.Whole));
+
+        chanceExecutor.Execute();
+
+        return seed switch
+        {
+            64 => MusicalTimeSpan.SixtyFourth,
+            32 => MusicalTimeSpan.ThirtySecond,
+            16 => MusicalTimeSpan.Sixteenth,
+            8 => MusicalTimeSpan.Eighth,
+            4 => MusicalTimeSpan.Quarter,
+            2 => MusicalTimeSpan.Half,
+            1 => MusicalTimeSpan.Whole,
+            _ => MusicalTimeSpan.Whole
+        };
+    }
+
+    public Pattern Bass(MusicalTimeSpan timeSpan)
     {
         Note root = Note.Get(RootNote.NoteName, OctaveCache - 1);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetNoteLength(timeSpan)
             .SetRootNote(root)
             .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Full))
             .Build();
     }
 
-    public static Pattern Drums()
+    public static Pattern Drums(MusicalTimeSpan timeSpan)
     {
         /*.Chord(new[]
         {
@@ -209,12 +288,12 @@ public class Patterns
         Note kick = Note.Get(NoteName.C, 2);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetNoteLength(timeSpan)
             .Note(kick, new SevenBitNumber((byte) Enums.NoteVelocity.Full))
             .Build();
     }
 
-    public Pattern Lead(bool harmony = false)
+    public Pattern Lead(MusicalTimeSpan timeSpan, bool harmony = false)
     {
         if (harmony)
         {
@@ -223,20 +302,20 @@ public class Patterns
         else
         {
             int octave = RootNote.Octave;
-            OctaveCache = Randomise.Run(octave + 1, octave + 3);
+            OctaveCache = Randomise.Run(octave + Settings.LeadOctMin, octave + Settings.LeadOctMax);
             IntervalCache = GetInterval(ProbScaleLead);
         }
 
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetNoteLength(timeSpan)
             .SetRootNote(root)
             .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Open))
             .Build();
     }
 
-    public Pattern Harmonic(bool harmony = false)
+    public Pattern Harmonic(MusicalTimeSpan timeSpan, bool harmony = false)
     {
         if (harmony)
         {
@@ -252,16 +331,16 @@ public class Patterns
         Note root = Note.Get(RootNote.NoteName, OctaveCache);
 
         return new PatternBuilder()
-            .SetNoteLength(MusicalTimeSpan.Sixteenth)
+            .SetNoteLength(timeSpan)
             .SetRootNote(root)
             .Note(IntervalCache, new SevenBitNumber((byte) Enums.NoteVelocity.Harmonic))
             .Build();
     }
 
-    public static Pattern Gap()
+    public static Pattern Gap(MusicalTimeSpan timeSpan)
     {
         return new PatternBuilder()
-            .StepForward(MusicalTimeSpan.Sixteenth)
+            .StepForward(timeSpan)
             .Build();
     }
 
