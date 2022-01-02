@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Djenerative"
              xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
-             StartupUri="MainWindow.xaml" Startup="Application_Startup">
+             StartupUri="MainWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>

@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media.Effects;
 using AdonisUI.Controls;
 using Djenerative.CustomUI;
 using Melanchall.DryWetMidi.Common;
