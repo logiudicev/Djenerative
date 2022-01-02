@@ -23,7 +23,7 @@
 
     <Window.Resources>
         <ImageSource x:Key="imgSource">/Djenerative;component/background.jpg</ImageSource>
-        <ImageBrush x:Key="BackgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.5" Stretch="UniformToFill"></ImageBrush>
+        <ImageBrush x:Key="BackgroundImage" ImageSource="{DynamicResource imgSource}" Opacity="0.7" Stretch="UniformToFill"></ImageBrush>
     </Window.Resources>
 
     <StackPanel
@@ -52,7 +52,7 @@
                 VerticalContentAlignment="Center"
                 VerticalAlignment="Top"
                 Height="25"
-                SelectionChanged="PresetComboBox_SelectionChanged"/>
+                SelectionChanged="PresetComboBox_SelectionChanged" IsTabStop="False"/>
 
             <DockPanel HorizontalAlignment="Center">
                 <Button
@@ -61,7 +61,7 @@
                     Width="60"
                     Margin="10, 8, 10, 0"
                     Click="ReloadButton_Click"
-                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}" IsTabStop="False"/>
 
                 <Button
                     Name="SaveButton"
@@ -69,7 +69,7 @@
                     Width="60"
                     Margin="10, 8, 10, 0"
                     Click="SaveButton_Click"
-                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}" IsTabStop="False"/>
 
                 <Button
                     Name="DeleteButton"
@@ -77,7 +77,7 @@
                     Width="60"
                     Margin="10, 8, 10, 0"
                     Click="DeleteButton_Click"
-                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+                    Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}" IsTabStop="False"/>
             </DockPanel>
         </StackPanel>
 
@@ -97,7 +97,8 @@
                     Maximum="999"
                     HorizontalAlignment="Stretch"
                     Width="90"
-                    Margin="5, 0, 5, 0"/>
+                    Margin="5, 0, 5, 0"
+                    CanEdit="True"/>
 
                 <customUi:NumericEntryControl
                     x:Name="Notes"
@@ -106,7 +107,8 @@
                     Maximum="9999"
                     HorizontalAlignment="Stretch"
                     Width="100"
-                    Margin="5, 0, 5, 0"/>
+                    Margin="5, 0, 5, 0"
+                    CanEdit="True"/>
             </DockPanel>
         </StackPanel>
 
@@ -179,7 +181,7 @@
                 Maximum="99"
                 HorizontalAlignment="Stretch"
                 Width="80"
-                Margin="5, 0, 5, 0"/>
+                Margin="5, 0, 5, 0" IsEnabled="False"/>
 
             <customUi:NumericEntryControl
                 x:Name="WeightTimingThirtySecond"
@@ -188,7 +190,7 @@
                 Maximum="99"
                 HorizontalAlignment="Stretch"
                 Width="80"
-                Margin="5, 0, 5, 0"/>
+                Margin="5, 0, 5, 0" IsEnabled="False"/>
 
             <customUi:NumericEntryControl
                 x:Name="WeightTimingSixteenth"
@@ -288,7 +290,7 @@
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         VerticalAlignment="Top"
-                        Height="25"/>
+                        Height="25" IsTabStop="False"/>
 
                     <Label
                         Content="Root Note"
@@ -309,7 +311,7 @@
                         Name="ModesComboBox"
                         Width="130"
                         HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged"/>
+                        VerticalContentAlignment="Center" SelectionChanged="ModesComboBox_SelectionChanged" IsTabStop="False"/>
 
                     <Label
                         Content="Scale / Mode"
@@ -552,7 +554,7 @@
             Width="80"
             Click="GenerateButton_Click"
             Margin="0, 8, 0, 0"
-            Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}"/>
+            Style="{DynamicResource {x:Static adonisUi:Styles.AccentButton}}" IsTabStop="False"/>
 
     </StackPanel>
 </controls:AdonisWindow>

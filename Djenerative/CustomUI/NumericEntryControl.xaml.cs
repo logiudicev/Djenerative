@@ -25,8 +25,8 @@ namespace Djenerative.CustomUI
             new PropertyMetadata(100));
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum",
-                    typeof(int), typeof(NumericEntryControl),
-                    new PropertyMetadata(0));
+            typeof(int), typeof(NumericEntryControl),
+            new PropertyMetadata(0));
 
         public static readonly DependencyProperty IncrementProperty = DependencyProperty.Register("Increment",
             typeof(int), typeof(NumericEntryControl),
@@ -35,6 +35,10 @@ namespace Djenerative.CustomUI
         public static readonly DependencyProperty LargeIncrementProperty = DependencyProperty.Register("LargeIncrement",
             typeof(int), typeof(NumericEntryControl),
             new PropertyMetadata(5));
+
+        public static readonly DependencyProperty CanEditProperty = DependencyProperty.Register("CanEdit",
+            typeof(bool), typeof(NumericEntryControl),
+            new PropertyMetadata(false));
 
         private int _previousValue;
         private readonly DispatcherTimer _timer = new();
@@ -77,6 +81,12 @@ namespace Djenerative.CustomUI
         {
             get => (int)GetValue(LargeIncrementProperty);
             set => SetValue(LargeIncrementProperty, value);
+        }
+
+        public bool CanEdit
+        {
+            get => (bool)GetValue(CanEditProperty);
+            set => SetValue(CanEditProperty, value);
         }
 
         public NumericEntryControl()
@@ -140,7 +150,6 @@ namespace Djenerative.CustomUI
                 DecrementValue();
             }
             _timer.Interval = TimeSpan.FromMilliseconds(1000.0 / _repeatSpeed);
-
         }
 
         private void Textbox_GotFocus(object sender, RoutedEventArgs e)
@@ -204,9 +213,6 @@ namespace Djenerative.CustomUI
                     break;
                 case Key.PageDown:
                     Value = Math.Max(Value - LargeIncrement, Minimum);
-                    break;
-                default:
-                    //do nothing
                     break;
             }
         }

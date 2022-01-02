@@ -9,7 +9,7 @@ using Note = Melanchall.DryWetMidi.MusicTheory.Note;
 
 namespace Djenerative;
 
-public class Patterns
+internal class Patterns
 {
     private int OctaveCache { get; set; }
     private Interval? IntervalCache { get; set; }

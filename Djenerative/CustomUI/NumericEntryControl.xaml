@@ -14,13 +14,13 @@
                     Content="-" 
                     Width="{Binding ActualHeight, ElementName=buttonDecrement, Mode=Default}" 
                     Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"
-                    Focusable="False"/>
+                    Focusable="False" IsTabStop="False"/>
             <Button x:Name="buttonIncrement" 
                     DockPanel.Dock="Right" 
                     Content="+" 
                     Width="{Binding ActualHeight, ElementName=buttonDecrement, Mode=Default}" 
                     Height="{Binding ActualHeight, ElementName=_textbox, Mode=Default}"
-                    Focusable="False"/>
+                    Focusable="False" IsTabStop="False"/>
             <TextBox 
                 x:Name="_textbox" 
                 Margin="2,0"
@@ -32,9 +32,25 @@
                     UpdateSourceTrigger=PropertyChanged}" 
                 HorizontalAlignment="Stretch" 
                 HorizontalContentAlignment="Center" 
-                VerticalContentAlignment="Center" TextChanged="Textbox_TextChanged" Focusable="False" />
+                VerticalContentAlignment="Center"
+                TextChanged="Textbox_TextChanged"
+                IsTabStop="False"
+                Focusable="{Binding CanEdit, 
+                    Mode=Default, 
+                    RelativeSource={RelativeSource FindAncestor,
+                        AncestorLevel=1, 
+                        AncestorType={x:Type customUi:NumericEntryControl}}, 
+                    UpdateSourceTrigger=Default}"
+                IsHitTestVisible="{Binding CanEdit, 
+                    Mode=Default, 
+                    RelativeSource={RelativeSource FindAncestor,
+                        AncestorLevel=1, 
+                        AncestorType={x:Type customUi:NumericEntryControl}}, 
+                    UpdateSourceTrigger=Default}" />
         </DockPanel>
-        <Label x:Name="_label" HorizontalAlignment="Center" Content="{Binding Label, 
+        <Label x:Name="_label"
+               HorizontalAlignment="Center"
+               Content="{Binding Label, 
                     Mode=Default, 
                     RelativeSource={RelativeSource FindAncestor,
                         AncestorLevel=1, 

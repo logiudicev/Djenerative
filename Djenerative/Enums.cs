@@ -1,6 +1,6 @@
 ﻿namespace Djenerative;
 
-public static class Enums
+internal static class Enums
 {
     public enum NoteVelocity
     {

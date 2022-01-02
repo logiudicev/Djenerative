@@ -13,7 +13,7 @@
             public int Interval7 { get; set; }
         }
 
-        public static Intervals Minor()
+        internal static Intervals Minor()
         {
             return new Intervals
             {
@@ -27,7 +27,7 @@
             };
         }
 
-        public static Intervals Major()
+        internal static Intervals Major()
         {
             return new Intervals
             {
@@ -41,7 +41,7 @@
             };
         }
 
-        public static Intervals MelodicMinor()
+        internal static Intervals MelodicMinor()
         {
             return new Intervals
             {
@@ -55,7 +55,7 @@
             };
         }
 
-        public static Intervals HarmonicMinor()
+        internal static Intervals HarmonicMinor()
         {
             return new Intervals
             {
@@ -69,7 +69,7 @@
             };
         }
 
-        public static Intervals HungarianMinor()
+        internal static Intervals HungarianMinor()
         {
             return new Intervals
             {
@@ -83,7 +83,7 @@
             };
         }
 
-        public static Intervals Phyrigian()
+        internal static Intervals Phyrigian()
         {
             return new Intervals
             {

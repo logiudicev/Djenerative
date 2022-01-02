@@ -1,52 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <Company>Wilding Studios</Company>
-    <Authors>Matthew Wilding</Authors>
-    <AssemblyName>Djenerative</AssemblyName>
-	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-	<ApplicationIcon>icon-white.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<Company>Wilding Studios</Company>
+		<Authors>Matthew Wilding</Authors>
+		<AssemblyName>Djenerative</AssemblyName>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<ApplicationIcon>icon-white.ico</ApplicationIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="background.jpg" />
-    <None Remove="background.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="background.jpg" />
+		<None Remove="background.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="icon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="icon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
-    <PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
+		<PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\drywetmidi\DryWetMidi\Melanchall.DryWetMidi.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\drywetmidi\DryWetMidi\Melanchall.DryWetMidi.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="background.jpg" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="background.jpg" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Preset.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Preset.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Preset.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Preset.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\Preset.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Preset.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Preset.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Preset.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 </Project>

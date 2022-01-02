@@ -30,20 +30,26 @@ namespace Djenerative
         {
             try
             {
-                using HttpResponseMessage response = _client.GetAsync(VersionLink).Result;
-                using HttpContent content = response.Content;
-                string result = content.ReadAsStringAsync().Result;
-                string version = result.Replace("\\r\\n", "").Replace("\\n", "").Trim();
+                int version = 0;
 
-                if (version == "0")
+                try
                 {
-                    Environment.FailFast("Disabled");
+                    using HttpResponseMessage response = _client.GetAsync(VersionLink).Result;
+                    using HttpContent content = response.Content;
+                    string result = content.ReadAsStringAsync().Result;
+                    string versionStr = result.Replace("\\r\\n", "").Replace("\\n", "").Trim();
+                    version = int.Parse(versionStr);
                 }
-
-                bool success = int.TryParse(version, out int _);
-                if (!success)
+                catch
                 {
+                    MessageBox.Show("Please make sure the internet is connected", "No Internet");
                     Environment.FailFast("No Internet");
+                }
+                
+                if (version == 0)
+                {
+                    MessageBox.Show("This version has expired", "Expired");
+                    Environment.FailFast("Disabled");
                 }
 
                 if (File.Exists(UpdateForce))
@@ -53,7 +59,7 @@ namespace Djenerative
                     return;
                 }
 
-                if (Djenerative.Properties.Preset.Default.Version == int.Parse(version)) return;
+                if (Djenerative.Properties.Preset.Default.Version == version) return;
 
                 Update(version);
             }
@@ -64,7 +70,7 @@ namespace Djenerative
             }
         }
 
-        private void Update(string version)
+        private void Update(int version)
         {
             var messageBox = new MessageBoxModel
             {
@@ -87,7 +93,7 @@ namespace Djenerative
             string exe = Path.GetFileName(fullPath);
             string tmp = Path.GetFileName(download);
 
-            Djenerative.Properties.Preset.Default.Version = int.Parse(version);
+            Djenerative.Properties.Preset.Default.Version = version;
             Djenerative.Properties.Preset.Default.Save();
 
             ProcessStartInfo info = new()

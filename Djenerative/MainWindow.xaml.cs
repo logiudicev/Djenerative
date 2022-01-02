@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media.Effects;
 using AdonisUI.Controls;
 using Djenerative.CustomUI;
 using Melanchall.DryWetMidi.Common;
@@ -485,8 +486,10 @@ namespace Djenerative
                 case Key.Escape:
                     Close();
                     break;
+                case Key.Tab:
+                    e.Handled = true;
+                    break;
             }
-            e.Handled = true;
         }
 
         private void SetWindowStyle(Corner preference)
