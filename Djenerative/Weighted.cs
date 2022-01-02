@@ -21,38 +21,27 @@ internal class Weighted
     public class ChanceExecutor
     {
         public List<ChanceParam> Parameters { get; set; }
-        private Random r;
+        private readonly Random _rand;
 
         public double RatioSum
         {
             get { return Parameters.Sum(p => p.Ratio); }
         }
 
-        public ChanceExecutor(List<ChanceParam> parameters)
-        {
-            Parameters = parameters;
-            r = new Random();
-        }
-
         public ChanceExecutor()
         {
             Parameters = new List<ChanceParam>();
-            r = new Random();
+            _rand = new Random();
         }
 
         public void Add(ChanceParam parameters)
         {
-            /*
-            Parameters = parameters;
-            r = new Random();
-            */
-
             Parameters.Add(parameters);
         }
 
         public void Execute()
         {
-            double numericValue = r.NextDouble() * RatioSum;
+            double numericValue = _rand.NextDouble() * RatioSum;
 
             foreach (var parameter in Parameters)
             {
