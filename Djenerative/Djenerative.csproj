@@ -18,10 +18,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="icon.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="AdonisUI.ClassicTheme.NET5" Version="1.17.1" />
 		<PackageReference Include="AdonisUI.NET5" Version="1.17.1" />
 	</ItemGroup>
