@@ -1,0 +1,3 @@
+[submodule "DryWetMidi"]
+	path = DryWetMidi
+	url = https://github.com/mbwilding/drywetmidi.git
