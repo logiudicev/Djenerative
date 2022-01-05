@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Djenerative", "Djenerative\Djenerative.csproj", "{4CD47DEF-89BF-429C-915F-89D64DC1FBCD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Melanchall.DryWetMidi", "drywetmidi\DryWetMidi\Melanchall.DryWetMidi.csproj", "{9B6185C4-087F-4A38-915E-9EC27590DC0D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Coverage|Any CPU = Coverage|Any CPU
@@ -26,16 +24,6 @@ Global
 		{4CD47DEF-89BF-429C-915F-89D64DC1FBCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CD47DEF-89BF-429C-915F-89D64DC1FBCD}.ReleaseTest|Any CPU.ActiveCfg = Release|Any CPU
 		{4CD47DEF-89BF-429C-915F-89D64DC1FBCD}.ReleaseTest|Any CPU.Build.0 = Release|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Coverage|Any CPU.ActiveCfg = Coverage|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Coverage|Any CPU.Build.0 = Coverage|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.DebugTest|Any CPU.ActiveCfg = DebugTest|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.DebugTest|Any CPU.Build.0 = DebugTest|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.ReleaseTest|Any CPU.ActiveCfg = ReleaseTest|Any CPU
-		{9B6185C4-087F-4A38-915E-9EC27590DC0D}.ReleaseTest|Any CPU.Build.0 = ReleaseTest|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
