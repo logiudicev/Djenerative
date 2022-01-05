@@ -1,2 +1,2 @@
 # Djenerative
-Generates MIDI for use with "The Odin II | Solemn Tones".
+Generates MIDI for use with "Odin II | Solemn Tones".
